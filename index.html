@@ -437,9 +437,15 @@
         border-radius: 12px;
         display: grid;
         place-items: center;
-        font-size: 21px;
+        color: var(--theme);
         background: var(--theme-light);
         border: 1px solid var(--theme-border);
+      }
+
+      .agent-icon svg {
+        width: 22px;
+        height: 22px;
+        display: block;
       }
 
       .header-title {
@@ -481,8 +487,9 @@
 
       .header-progress {
         grid-column: 1 / -1;
-        width: min(480px, 100%);
-        justify-self: center;
+        width: 100%;
+        justify-self: stretch;
+        max-width: none;
         display: flex;
         align-items: center;
         gap: 10px;
@@ -826,6 +833,10 @@
         gap: 8px;
       }
 
+      .is-hidden {
+        display: none !important;
+      }
+
       .banner {
         border-radius: var(--radius-sm);
         border: 1px solid var(--banner-border);
@@ -1011,16 +1022,20 @@
       }
 
       .so-modal-card {
-        width: min(760px, 100%);
+        width: min(820px, 100%);
+        max-height: min(calc(100vh - 32px), 92vh);
         border-radius: var(--radius-card);
         border: 1px solid var(--border);
         background: #fff;
         box-shadow: 0 16px 40px rgba(15, 23, 42, 0.18);
         overflow: hidden;
+        display: flex;
+        flex-direction: column;
         animation: modal-in 180ms ease forwards;
       }
 
       .so-modal-head {
+        flex: 0 0 auto;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -1036,9 +1051,58 @@
       }
 
       .so-modal-body {
+        flex: 1 1 auto;
+        min-height: 0;
         padding: 14px;
         display: grid;
         gap: 10px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .compliance-bundle-intro {
+        font-size: 12px;
+        color: var(--text-secondary);
+        line-height: 1.55;
+        margin: 0;
+        padding: 10px 12px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border);
+        background: var(--violet-light);
+      }
+
+      .compliance-doc-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 11px;
+      }
+
+      .compliance-doc-table th,
+      .compliance-doc-table td {
+        border: 1px solid var(--border);
+        padding: 6px 8px;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .compliance-doc-table th {
+        background: var(--card-surface);
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--text-muted);
+      }
+
+      .compliance-doc-table tr:nth-child(even) td {
+        background: rgba(248, 250, 252, 0.9);
+      }
+
+      .compliance-doc-code {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--violet);
+        white-space: nowrap;
       }
 
       .so-doc-header {
@@ -1071,6 +1135,102 @@
         font-size: 11px;
         color: var(--text-primary);
         font-weight: 500;
+      }
+
+      .so-doc-block {
+        margin-bottom: 4px;
+      }
+
+      .so-doc-block .so-doc-header {
+        margin-bottom: 8px;
+      }
+
+      .so-doc-address {
+        font-size: 10px;
+        line-height: 1.45;
+        color: var(--text-secondary);
+        margin-top: 6px;
+        padding: 8px 10px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        background: #fafbfc;
+      }
+
+      .so-doc-address strong {
+        color: var(--text-primary);
+        font-size: 10px;
+      }
+
+      .so-line-table-wrap {
+        margin-top: 10px;
+        overflow-x: auto;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border);
+      }
+
+      .so-line-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 10px;
+      }
+
+      .so-line-table th,
+      .so-line-table td {
+        border-bottom: 1px solid var(--border);
+        padding: 7px 8px;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .so-line-table th {
+        background: var(--card-surface);
+        font-weight: 600;
+        color: var(--text-secondary);
+        white-space: nowrap;
+      }
+
+      .so-line-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .so-line-table .num {
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+      }
+
+      .so-line-table .mat {
+        font-family: var(--font-mono);
+        font-size: 9px;
+      }
+
+      .so-totals {
+        margin-top: 10px;
+        display: grid;
+        gap: 4px;
+        font-size: 10px;
+        max-width: 280px;
+        margin-left: auto;
+      }
+
+      .so-totals-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        color: var(--text-secondary);
+      }
+
+      .so-totals-row strong {
+        color: var(--text-primary);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .so-totals-row.grand {
+        margin-top: 4px;
+        padding-top: 8px;
+        border-top: 1px solid var(--border);
+        font-weight: 600;
+        color: var(--text-primary);
       }
 
       .theme-teal { --theme: var(--teal); --theme-light: var(--teal-light); --theme-border: var(--teal-border); }
@@ -1163,7 +1323,7 @@
         margin-top: 0;
       }
       .bottom-panel-content.open {
-        max-height: 500px;
+        max-height: min(720px, 85vh);
         opacity: 1;
         margin-top: 8px;
       }
@@ -1253,6 +1413,15 @@
         <div class="so-modal-body" id="soModalBody"></div>
       </div>
     </div>
+    <div class="so-modal-overlay" id="complianceModalOverlay" onclick="closeComplianceModal(event)">
+      <div class="so-modal-card" id="complianceModalCard" onclick="event.stopPropagation()">
+        <div class="so-modal-head">
+          <div class="so-modal-title" id="complianceModalTitle">Export document bundle</div>
+          <button type="button" class="btn btn-ghost" onclick="closeComplianceModal()">Close</button>
+        </div>
+        <div class="so-modal-body" id="complianceModalBody"></div>
+      </div>
+    </div>
 
     <script>
       const appState = {
@@ -1264,6 +1433,9 @@
         isRunning: false,
         stepState: {},
         logState: {},
+        resumeStepByAgent: {},
+        stepsAnimating: false,
+        mapperManualCode: null,
       };
 
       appState.currentAgent = 2;
@@ -1271,21 +1443,34 @@
       appState.timerRef = null;
       appState.hitlApproved = false;
       appState.hitlRejected = false;
+      appState.soHitlApproved = false;
+      appState.soApprovalPreviewSeen = false;
+      appState.soHoldForReview = false;
+      appState.complianceHitlApproved = false;
+      appState.complianceHoldForReview = false;
+      appState.soManagerReviewedSoIds = new Set();
       appState.activeBottomPanel = null;  // 'approval' | 'output' | 'validate' | null
       appState.simTimeout = null;
 
+      const iconEmail = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>`;
+      const iconDoc = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><path d="M14 2v6h6"/><circle cx="10.5" cy="14.5" r="2.5"/><path d="m20 20-2-2"/></svg>`;
+      const iconMapper = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>`;
+      const iconValidator = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>`;
+      const iconSo = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>`;
+      const iconCompliance = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 12-8.58 3.91a2 2 0 0 1-1.66 0L3 12"/><path d="m22 17-8.58 3.91a2 2 0 0 1-1.66 0L3 17"/></svg>`;
+
       const agents = [
         {
-          id: 1, key: "email", theme: "teal", icon: "📧", dot: "var(--teal)", name: "Email Watcher",
+          id: 1, key: "email", theme: "teal", icon: iconEmail, dot: "var(--teal)", name: "Email Watcher",
           desc: "Monitors inbound channels and queues PO payloads for extraction.",
           tools: ["MS Graph API", "IMAP listener", "NLP Classifier", "Azure Logic Apps"],
           stateText: { done: "Completed", running: "Running", hitl: "Awaiting review", error: "Error", idle: "Idle" },
           steps: [
-            ["Connect MS Graph API", "Auth OK. Token valid.", "0.2s · PASS"],
-            ["Scan inbox — 47 emails", "1 PO from coral@coralintl.com", "18 sec avg"],
-            ["NLP email classification", "PURCHASE ORDER · 99.2% confidence", "5 sec · 99.2%"],
-            ["Download PDF attachment", "COR-BATCH-46.pdf · 6.3 MB · 3 pages", "1.1 sec · 6.3 MB"],
-            ["Queue for Doc Intelligence", "Payload queued. Auto-ack sent to buyer.", "Instant"],
+            ["Connected to company email inbox", "System securely signed in to the shared Outlook mailbox and is ready to watch for new orders.", "0.2s · PASS"],
+            ["Scanning 47 emails for purchase orders", "Checking every recent email to find ones that contain an order from a buyer — ignoring promotions and other mail.", "18 sec avg"],
+            ["1 purchase order identified from Coral International", "The system read the email and confirmed it is a real buyer order (not spam). Confidence: 99.2%.", "5 sec · 99.2%"],
+            ["Order document saved and ready for reading", "The attached PDF (COR-BATCH-46 · 3 pages) has been safely downloaded and queued for data extraction.", "1.1 sec · 6.3 MB"],
+            ["Buyer notified — order is being processed", "An automatic confirmation was sent to the buyer. The order document is now passed to the next agent for reading.", "Instant"],
           ],
           metrics: [["47", "emails scanned"], ["3", "POs found"], ["18s", "detect time"]],
           logs: [
@@ -1301,16 +1486,16 @@
           output: "email_metadata:\n- sender: coral@coralintl.com\n- subject: PO COR-BATCH-46\n- attachment: /inbox/COR-BATCH-46.pdf",
         },
         {
-          id: 2, key: "doc", theme: "purple", icon: "🔍", dot: "var(--purple)", name: "Doc Intelligence",
+          id: 2, key: "doc", theme: "purple", icon: iconDoc, dot: "var(--purple)", name: "Doc Intelligence",
           desc: "Runs OCR + NLP extraction and outputs structured purchase order fields.",
           tools: ["Azure Form Recognizer", "LayoutLM", "spaCy NER", "pytesseract"],
           stateText: { done: "Completed", running: "Running", hitl: "Awaiting review", error: "Error", idle: "Idle" },
           steps: [
-            ["Initialize LayoutLM model", "Azure Form Recognizer v3.0 loaded.", "0.4s · ready"],
-            ["Run OCR on 3 pages", "Text extracted. 300 DPI. Clean scan.", "2.1s · 300 DPI"],
-            ["NLP field extraction", "24 fields: buyer, 12 items, LC ref, FOB", "4.9s · 24 fields"],
-            ["Confidence scoring", "Overall 99.4% · lowest 97.1% · PASS", "99.4% avg"],
-            ["Write structured JSON", "USD 100,224 confirmed → Item Mapper", "7.4s · 0 errors"],
+            ["Document reading engine started", "The AI document reader is ready. It understands tables, text, and structured forms — just like a trained data entry clerk, but faster.", "0.4s · ready"],
+            ["All  pages of the order document scanned", "Every line, number, and word on the PDF has been read. The document is clean and all text was captured correctly.", "2.1s · 300 DPI"],
+            ["Order details pulled out — buyer, items, prices, payment terms", "24 pieces of information extracted: buyer name, 12 product lines, unit prices, LC reference number, and shipping terms (FOB).", "4.9s · 24 fields"],
+            ["Accuracy check — all fields verified above safe threshold", "Every extracted value was cross-checked. Overall accuracy 99.4% — well above the required 95% minimum. No manual correction needed.", "99.4% avg"],
+            ["Order data structured and passed to product matching", "All 12 order lines (total USD 100,224) have been organised into a clean data record. Sent to the next agent for product code matching.", "7.4s · 0 errors"],
           ],
           metrics: [["24", "fields extracted"], ["99.4%", "confidence"], ["7.4s", "parse time"]],
           logs: [
@@ -1325,16 +1510,16 @@
           output: "extracted_fields:\n- buyer: Coral International\n- po_number: COR-BATCH-46\n- line_items: 12\n- amount_usd: 100224",
         },
         {
-          id: 3, key: "mapper", theme: "amber", icon: "🗺️", dot: "var(--amber)", name: "Item Mapper",
+          id: 3, key: "mapper", theme: "amber", icon: iconMapper, dot: "var(--amber)", name: "Item Mapper",
           desc: "Matches extracted item descriptions against ERP item master with confidence checks.",
           tools: ["RapidFuzz", "ERP Item Master", "Confidence Scorer"],
           stateText: { done: "Approved — continuing", running: "Running", hitl: "Awaiting approval", error: "Error", idle: "Idle" },
           steps: [
-            ["Load ERP item master", "4,821 records from SAP S/4HANA", "0.3s · 4821 records"],
-            ["RapidFuzz matching 12 items", "11 items above 95% · avg conf 97.1%", "11/12 auto-mapped"],
-            ["FLAGGED — HITL", "Entry #04: COR-FILTER-XLR8 · 88% conf", "Awaiting human review"],
-            ["Confidence complete", "Awaiting approval", "Pending"],
-            ["Write JSON payload", "→ Validation Agent queue", "Pending"],
+            ["Company product catalogue loaded — 4,821 items", "The full internal product list was pulled from the ERP system. This is the reference list used to match buyer descriptions to your product codes.", "0.3s · 4821 records"],
+            ["11 of 12 products automatically matched to internal codes", "The system compared buyer descriptions against your product list. 11 matched automatically (confidence above 95%). 1 item needs a human check.", "11/12 auto-mapped"],
+            ["1 product needs your confirmation before continuing", "Entry #04 ('COR-FILTER-XLR8') was matched with 88% confidence — below the safe threshold. A suggested match is shown for your approval.", "Awaiting human review"],
+            ["Final product match list confirmed", "All 12 product lines now have verified internal codes attached to the order payload.", "12/12 confirmed"],
+            ["Matched order passed to validation", "The product-matched order record was released to the Validator agent for price and credit checks.", "Sent to Validator"],
           ],
           metrics: [["12", "items"], ["1", "HITL flag"], ["91%", "avg confidence"]],
           logs: [
@@ -1350,16 +1535,16 @@
           output: "item_mapping:\n- auto_mapped: 11\n- flagged: 1\n- flagged_item: COR-FILTER-XLR8 (88%)\n- suggested_code: NAQUA-FILTER-XLR-8B",
         },
         {
-          id: 4, key: "validator", theme: "blue", icon: "🛡️", dot: "var(--blue)", name: "Validator",
+          id: 4, key: "validator", theme: "blue", icon: iconValidator, dot: "var(--blue)", name: "Validator",
           desc: "Applies business constraints, pricing checks, and credit policies before SO posting.",
           tools: ["Business Rules Engine", "ERP Credit API", "Pricing DB"],
           stateText: { done: "Completed", running: "Running", hitl: "Awaiting review", error: "Error", idle: "Idle" },
           steps: [
-            ["Load 37 validation rules", "Business rules engine initialized.", "0.1s · 37 rules"],
-            ["Mandatory field check", "All 24 fields present · PASS", "24/24 PASS"],
-            ["Pricing reconciliation", "USD 100,224 vs pricelist · delta <0.5%", "MATCH"],
-            ["Credit limit check", "Exposure USD 200,448 of USD 5M · 4%", "Limit OK"],
-            ["Validation report written", "37 rules passed. 0 exceptions. → SO Agent", "9.2s · 0 exceptions"],
+            ["37 business checks loaded and ready", "All company rules — pricing policy, credit limits, required fields, shipping terms — are loaded and will run automatically on this order.", "0.1s · 37 rules"],
+            ["Order is complete — no missing information", "All 24 required fields are present: buyer details, product lines, prices, payment method, and shipping terms. Nothing is blank or incomplete.", "24/24 PASS"],
+            ["Buyer's prices match our current price list", "The order value of USD 100,224 was checked against the active pricelist. The difference is less than 0.5% — within accepted tolerance. No price dispute.", "MATCH"],
+            ["Buyer's credit is well within the approved limit", "Coral International has used USD 200,448 of their USD 5M credit line — only 4%. This order is safe to proceed financially.", "Limit OK"],
+            ["All 37 checks passed — order cleared for processing", "No issues found. A full verification record has been saved. The order is now approved to be entered into the system.", "9.2s · 0 exceptions"],
           ],
           metrics: [["37", "rules checked"], ["100%", "auto-passed"], ["0", "exceptions"]],
           logs: [
@@ -1374,22 +1559,23 @@
           output: "validation_report:\n- rules_checked: 37\n- pass_rate: 100%\n- pricing_delta: <0.5%\n- exceptions: 0",
         },
         {
-          id: 5, key: "so", theme: "green", icon: "📋", dot: "var(--green)", name: "SO Agent",
+          id: 5, key: "so", theme: "green", icon: iconSo, dot: "var(--green)", name: "SO Agent",
           desc: "Creates ERP sales orders and routes manager checkpoint for commercial sign-off.",
           tools: ["ERP REST API", "UiPath Orchestrator", "SO Template"],
-          stateText: { done: "Completed", running: "Running", hitl: "Awaiting review", error: "Error", idle: "Idle" },
+          stateText: { done: "Completed", running: "Running", hitl: "Awaiting manager approval", error: "Error", idle: "Idle" },
           steps: [
-            ["Build ERP REST payload", "Validated JSON → SAP S/4HANA schema", "0.5s · 3 SOs"],
-            ["Authenticate to SAP S/4HANA", "OAuth2 token acquired. Connection OK.", "0.3s · Auth OK"],
-            ["POST 3 Sales Orders", "COR46→SO-45912 ✓ COR47→SO-45913 ✓ COR48→SO-45914 ✓", "11s"],
-            ["HITL — Manager approval", "Dashboard notif sent · SLA 2 hrs", "Awaiting human review"],
-            ["Approval received · confirmed", "Approved in 38 min. SOs active.", "38 min · SLA met"],
+            ["Sales order prepared and ready to enter the system", "All verified order details have been organised in the exact format that the ERP system (SAP) requires. No manual data entry needed.", "0.5s · 3 SOs"],
+            ["Securely connected to the ERP system", "The agent has logged into SAP on your behalf using secure credentials. Connection is active and stable.", "0.3s · Auth OK"],
+            ["3 sales orders created in SAP — no manual entry", "COR46 → SO-45912 ✓  COR47 → SO-45913 ✓  COR48 → SO-45914 ✓  All 3 orders are now live in the system.", "11s"],
+            ["Waiting for manager to approve the sales orders", "Manager reviewed and released all three orders within the 2-hour SLA. Commercial approval is on record.", "Manager approved · 3/3 SOs"],
+            ["Orders approved and active in the system", "Manager approved in 38 minutes (well within the 2-hour limit). All 3 sales orders are confirmed and live. Export documents can now be prepared.", "38 min · SLA met"],
           ],
           metrics: [["3", "SOs posted"], ["11s", "ERP response"], ["99.1%", "API success"]],
           logs: [
             "Payload transformed for SAP API.",
             "ERP authentication successful.",
             "SO-45912/13/14 posted.",
+            "Manager review requested for SO-45912/13/14 — awaiting approval.",
             "Manager sign-off complete.",
           ],
           banners: [
@@ -1398,22 +1584,23 @@
           output: "sales_orders:\n- SO-45912\n- SO-45913\n- SO-45914\namount_usd: 300672",
         },
         {
-          id: 6, key: "compliance", theme: "violet", icon: "📑", dot: "var(--violet)", name: "Compliance",
+          id: 6, key: "compliance", theme: "violet", icon: iconCompliance, dot: "var(--violet)", name: "Compliance",
           desc: "Generates export documentation, controls finance sign-off, and writes immutable audit logs.",
           tools: ["DocGen Engine", "SWIFT Router", "Audit Logger", "DHL API"],
           stateText: { done: "Completed", running: "Running", hitl: "Awaiting review", error: "Error", idle: "Idle" },
           steps: [
-            ["Load 3 SOs from Agent 05", "SO-45912/13/14 · USD 300,672 total", "0.2s · 3 SOs"],
-            ["Generate 3 BL drafts", "CGMU6956470, CGMU6983671, AMCU9371181", "3 BLs · 18s"],
-            ["Generate LC, packing, CO docs", "18 documents total · LC pre-check PASS", "42s · 18 docs"],
-            ["HITL — Finance sign-off", "Doc set sent for review · 15 min SLA", "Awaiting human review"],
-            ["Dispatch + audit log", "Sent to ANB Bank + customer. DHL triggered. ISO log written.", "3m 51s total"],
+            ["3 confirmed sales orders received — total USD 300,672", "The approved order data from the previous step has been loaded. Document preparation is starting for all 3 shipments.", "0.2s · 3 SOs"],
+            ["Shipping documents (Bill of Lading) prepared for 3 containers", "Draft Bills of Lading generated for containers CGMU6956470, CGMU6983671, and AMCU9371181. These are the shipping line documents.", "3 BLs · 18s"],
+            ["18 export documents created — Letter of Credit, packing lists, certificates", "All required export paperwork has been generated: LC drafts, packing lists, and certificates of origin. Pre-checked against LC terms — no errors found.", "42s · 18 docs"],
+            ["Finance team reviewing the full document set", "All 18 documents have been sent to finance for sign-off. They have 15 minutes to review. The system has already pre-checked every LC field for accuracy.", "Awaiting human review"],
+            ["Documents sent to bank and buyer — full record saved", "Documents dispatched to ANB Bank and Coral International. Physical originals couriered via DHL. A complete, tamper-proof record of every action has been saved for audit purposes.", "3m 51s total"],
           ],
           metrics: [["18", "docs generated"], ["94%", "1st-attempt bank"], ["3m51s", "total cycle"]],
           logs: [
             "Document generation batch started.",
             "Export bundle contains 18 documents.",
-            "Finance sign-off checkpoint initiated.",
+            "Pre-dispatch bundles routed to finance queue.",
+            "Finance sign-off checkpoint — awaiting approver.",
             "Dispatch and audit ledger write queued.",
           ],
           banners: [
@@ -1431,39 +1618,174 @@
 
       const soDocuments = {
         "SO-45912": {
-          customer: "Coral International",
-          amount: "USD 100,224",
+          customer: "Coral International FZE",
+          customerCode: "8100049217",
+          customerPo: "PO-COR-2026-8841 / COR46",
+          referenceBatch: "COR-BATCH-46",
+          orderDate: "14-Apr-2026",
+          pricingDate: "14-Apr-2026",
+          requestedShipDate: "28-Apr-2026",
+          salesOrg: "1010 · NAQUA Export · PK",
+          distChannel: "10 · Sea export",
+          division: "00 · Cross-division",
+          incoterm: "FOB Karachi (Incoterms 2020)",
+          incotermLocation: "KICT / Port Qasim — alongside vessel",
+          paymentTerms: "Irrevocable LC at 45 days sight",
+          lcRef: "LC-ANB-2026-44821 (ANB Bank)",
           currency: "USD",
-          paymentTerms: "LC 45 days",
-          incoterm: "FOB Karachi",
-          items: "4 line items",
-          createdBy: "SO Agent",
-          approvedBy: "Sales Manager",
-          status: "Posted to SAP S/4HANA"
+          amount: "USD 100,224.00",
+          subtotal: "USD 95,451.20",
+          taxLabel: "PK withholding / charges (5.0%)",
+          tax: "USD 4,772.80",
+          freight: "USD 0.00",
+          plant: "1011 · Karachi Mfg",
+          shippingPoint: "KHI-SP-01",
+          route: "SEA-EXP-DXB-JAFZ",
+          createdBy: "SO Agent · batch COR46",
+          approvedBy: "Sales Manager (pending release)",
+          status: "Posted to SAP S/4HANA · Awaiting commercial approval",
+          shipToName: "Coral International FZE — Jebel Ali",
+          shipToLines: [
+            "Warehouse 7B, Plot CM-12",
+            "Jebel Ali Free Zone (North)",
+            "Dubai, United Arab Emirates",
+            "Attention: Imports desk · +971-4-881-2200",
+          ],
+          soldToLines: [
+            "Coral International FZE",
+            "Trade licence 104892 · VAT AE-104892",
+            "Accounts payable: ap@coralintl.com",
+          ],
+          lineItems: [
+            { mat: "NAQUA-FLT-XLR-8B", desc: "Industrial filter cartridge XLR8 — batch NAQ-26-Q2", qty: 120, uom: "EA", unit: 412.8, net: 49536.0 },
+            { mat: "NAQUA-PMP-HVY-02", desc: "Heavy-duty process pump assembly — incl. mechanical seal kit", qty: 8, uom: "EA", unit: 5739.4, net: 45915.2 },
+            { mat: "SVC-DOC-ORIG-01", desc: "Original shipping docs & courier pouch (DHL ref auto)", qty: 1, uom: "AU", unit: 0.0, net: 0.0 },
+          ],
         },
         "SO-45913": {
-          customer: "Coral International",
-          amount: "USD 99,912",
+          customer: "Coral International FZE",
+          customerCode: "8100049217",
+          customerPo: "PO-COR-2026-8841 / COR47",
+          referenceBatch: "COR-BATCH-46",
+          orderDate: "14-Apr-2026",
+          pricingDate: "14-Apr-2026",
+          requestedShipDate: "02-May-2026",
+          salesOrg: "1010 · NAQUA Export · PK",
+          distChannel: "10 · Sea export",
+          division: "00 · Cross-division",
+          incoterm: "FOB Karachi (Incoterms 2020)",
+          incotermLocation: "KICT / Port Qasim — alongside vessel",
+          paymentTerms: "Irrevocable LC at 45 days sight",
+          lcRef: "LC-ANB-2026-44821 (ANB Bank)",
           currency: "USD",
-          paymentTerms: "LC 45 days",
-          incoterm: "FOB Karachi",
-          items: "4 line items",
-          createdBy: "SO Agent",
-          approvedBy: "Sales Manager",
-          status: "Posted to SAP S/4HANA"
+          amount: "USD 99,912.00",
+          subtotal: "USD 95,154.32",
+          taxLabel: "PK withholding / charges (5.0%)",
+          tax: "USD 4,757.68",
+          freight: "USD 0.00",
+          plant: "1011 · Karachi Mfg",
+          shippingPoint: "KHI-SP-01",
+          route: "SEA-EXP-DXB-JAFZ",
+          createdBy: "SO Agent · batch COR47",
+          approvedBy: "Sales Manager (pending release)",
+          status: "Posted to SAP S/4HANA · Awaiting commercial approval",
+          shipToName: "Coral International FZE — Jebel Ali",
+          shipToLines: [
+            "Warehouse 7B, Plot CM-12",
+            "Jebel Ali Free Zone (North)",
+            "Dubai, United Arab Emirates",
+            "Attention: Imports desk · +971-4-881-2200",
+          ],
+          soldToLines: [
+            "Coral International FZE",
+            "Trade licence 104892 · VAT AE-104892",
+            "Accounts payable: ap@coralintl.com",
+          ],
+          lineItems: [
+            { mat: "NAQUA-VAL-BLV-12", desc: "Ball valve DN150 PN40 — stainless CF8M", qty: 64, uom: "EA", unit: 886.5, net: 56736.0 },
+            { mat: "NAQUA-SEAL-KIT-9", desc: "Gasket & bolt kit for BLV-12 (per valve)", qty: 64, uom: "EA", unit: 42.8, net: 2739.2 },
+            { mat: "NAQUA-SPOOL-6M", desc: "Prefabricated spool 6m — schedule 40", qty: 12, uom: "EA", unit: 2973.26, net: 35679.12 },
+            { mat: "SVC-DOC-ORIG-01", desc: "Original shipping docs & courier pouch (DHL ref auto)", qty: 1, uom: "AU", unit: 0.0, net: 0.0 },
+          ],
         },
         "SO-45914": {
-          customer: "Coral International",
-          amount: "USD 100,536",
+          customer: "Coral International FZE",
+          customerCode: "8100049217",
+          customerPo: "PO-COR-2026-8841 / COR48",
+          referenceBatch: "COR-BATCH-46",
+          orderDate: "14-Apr-2026",
+          pricingDate: "14-Apr-2026",
+          requestedShipDate: "05-May-2026",
+          salesOrg: "1010 · NAQUA Export · PK",
+          distChannel: "10 · Sea export",
+          division: "00 · Cross-division",
+          incoterm: "FOB Karachi (Incoterms 2020)",
+          incotermLocation: "KICT / Port Qasim — alongside vessel",
+          paymentTerms: "Irrevocable LC at 45 days sight",
+          lcRef: "LC-ANB-2026-44821 (ANB Bank)",
           currency: "USD",
-          paymentTerms: "LC 45 days",
-          incoterm: "FOB Karachi",
-          items: "4 line items",
-          createdBy: "SO Agent",
-          approvedBy: "Sales Manager",
-          status: "Posted to SAP S/4HANA"
-        }
+          amount: "USD 100,536.00",
+          subtotal: "USD 95,748.57",
+          taxLabel: "PK withholding / charges (5.0%)",
+          tax: "USD 4,787.43",
+          freight: "USD 0.00",
+          plant: "1011 · Karachi Mfg",
+          shippingPoint: "KHI-SP-01",
+          route: "SEA-EXP-DXB-JAFZ",
+          createdBy: "SO Agent · batch COR48",
+          approvedBy: "Sales Manager (pending release)",
+          status: "Posted to SAP S/4HANA · Awaiting commercial approval",
+          shipToName: "Coral International FZE — Jebel Ali",
+          shipToLines: [
+            "Warehouse 7B, Plot CM-12",
+            "Jebel Ali Free Zone (North)",
+            "Dubai, United Arab Emirates",
+            "Attention: Imports desk · +971-4-881-2200",
+          ],
+          soldToLines: [
+            "Coral International FZE",
+            "Trade licence 104892 · VAT AE-104892",
+            "Accounts payable: ap@coralintl.com",
+          ],
+          lineItems: [
+            { mat: "NAQUA-MOT-3PH-55", desc: "Electric motor 55 kW 400/690V IE3 — foot mounted", qty: 6, uom: "EA", unit: 8420.0, net: 50520.0 },
+            { mat: "NAQUA-VFD-A550", desc: "VFD cabinet 550 A — harmonics filter option H03", qty: 6, uom: "EA", unit: 5210.5, net: 31263.0 },
+            { mat: "NAQUA-CBL-PWR-95", desc: "Power cable 95mm² XLPE LSOH (per meter) — cut length", qty: 480, uom: "M", unit: 22.5, net: 10800.0 },
+            { mat: "SVC-COMMISS-01", desc: "Commissioning supervision — 2 engineer-days (remote)", qty: 2, uom: "DA", unit: 1582.785, net: 3165.57 },
+            { mat: "SVC-DOC-ORIG-01", desc: "Original shipping docs & courier pouch (DHL ref auto)", qty: 1, uom: "AU", unit: 0.0, net: 0.0 },
+          ],
+        },
       };
+
+      const complianceExportDocuments = [
+        { code: "BL-D-01", name: "Draft Bill of Lading — CGMU6956470", detail: "KICT load port · FOB Karachi · On-board notation pending" },
+        { code: "BL-D-02", name: "Draft Bill of Lading — CGMU6983671", detail: "Same voyage · Partial shipment 1 of 3" },
+        { code: "BL-D-03", name: "Draft Bill of Lading — AMCU9371181", detail: "Same voyage · Partial shipment 3 of 3" },
+        { code: "INV-01", name: "Commercial invoice — SO-45912", detail: "USD 100,224.00 · PK origin line items · Matches LC amount window" },
+        { code: "INV-02", name: "Commercial invoice — SO-45913", detail: "Same batch · Cross-reference COR47" },
+        { code: "INV-03", name: "Commercial invoice — SO-45914", detail: "Same batch · Cross-reference COR48" },
+        { code: "PL-00", name: "Consolidated packing list — COR-BATCH-46", detail: "Net/gross weights · HS codes · Container split" },
+        { code: "PL-12", name: "Detailed packing list — SO-45912", detail: "Line-level weights per SKU · Serial refs" },
+        { code: "COO-01", name: "Certificate of origin — Chamber of Commerce", detail: "Pakistan origin · Stamped & signed" },
+        { code: "LC-CP", name: "Letter of credit — beneficiary copy", detail: "LC-ANB-2026-44821 · 45 days sight · Clean field match" },
+        { code: "LC-OR", name: "Letter of credit — original bank advice", detail: "Authentication ref ANB-ADV-88214" },
+        { code: "PHY-01", name: "Phytosanitary certificate", detail: "Plant-based packaging declaration · NAQ-KHI-PHY-26-1102" },
+        { code: "WQI-01", name: "Certificate of quality / weight", detail: "SGS template · Within LC tolerance" },
+        { code: "BEX-01", name: "Bill of exchange draft", detail: "At 45 days sight · Drawn on ANB Bank" },
+        { code: "BEN-01", name: "Beneficiary certificate", detail: "Certifies invoice/BL consistency per UCP 600" },
+        { code: "INS-01", name: "Marine insurance certificate", detail: "ICC (A) · Institute cargo clauses · ANB as loss payee" },
+        { code: "NWN-01", name: "Non-wood packing declaration", detail: "IPPC compliance · Pallets & crates" },
+        { code: "SLI-01", name: "Shipper's letter of instruction + export checklist", detail: "Final authorization for courier + bank dispatch" },
+      ];
+
+      function fmtUsdAmount(n) {
+        return new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }).format(n);
+      }
 
       function fmtState(s) {
         return s.toUpperCase();
@@ -1475,12 +1797,66 @@
         return `${m}:${s}`;
       }
 
+      function terminalLogLineIsHitlWaiting(line) {
+        return /checkpoint waiting for operator/i.test(line);
+      }
+
+      function terminalLogLineIsSoAwaitingApproval(line) {
+        return /awaiting approval/i.test(line);
+      }
+
+      function terminalLogLineIsComplianceAwaiting(line) {
+        return /Finance sign-off checkpoint — awaiting approver/i.test(line);
+      }
+
+      function terminalLogNeedsAwaitingStyle(line) {
+        return (
+          terminalLogLineIsHitlWaiting(line) ||
+          terminalLogLineIsSoAwaitingApproval(line) ||
+          terminalLogLineIsComplianceAwaiting(line)
+        );
+      }
+
+      /** Left nav badge/class: hide pipeline HITL on Item Mapper — show same as not-yet-run agents */
+      function navDisplayState(agentIndex) {
+        const s = appState.agentStates[agentIndex];
+        if (agentIndex === 2 && s === "hitl") return "idle";
+        return s;
+      }
+
+      function getAgentTerminalLogLine(agentIndex, logStepIndex) {
+        const a = agents[agentIndex];
+        const logs = a.logs || [];
+        if (agentIndex === 2 && appState.hitlApproved) {
+          if (logStepIndex === 3) return "Operator approved suggested mapping — HITL checkpoint cleared.";
+          if (logStepIndex === 4) return "Verified match list sealed — forwarding order to Validator.";
+        }
+        if (agentIndex === 4 && appState.soHitlApproved) {
+          if (logStepIndex === 3) {
+            return "Manager approved all 3 SOs (SO-45912/13/14) — commercial sign-off recorded.";
+          }
+          if (logStepIndex === 4) return "Release posted — all orders active in SAP.";
+        }
+        if (agentIndex === 5 && appState.complianceHitlApproved) {
+          if (logStepIndex === 3) return "Finance approved export bundle — sign-off recorded.";
+          if (logStepIndex === 4) return "Dispatch and audit ledger write queued.";
+        }
+        if (logStepIndex < logs.length) return logs[logStepIndex];
+        return null;
+      }
+
       function getInitialProgress(agentIndex) {
         const totalSteps = agents[agentIndex].steps.length;
         const completed = appState.completedSteps[agentIndex] ?? 0;
         if (totalSteps <= 0) return 0;
         if (agentIndex === 2 && !appState.hitlApproved) {
           return Math.min((completed / totalSteps) * 100, (3 / totalSteps) * 100);
+        }
+        if (agentIndex === 4 && !appState.soHitlApproved) {
+          return Math.min((completed / totalSteps) * 100, (4 / totalSteps) * 100);
+        }
+        if (agentIndex === 5 && !appState.complianceHitlApproved) {
+          return Math.min((completed / totalSteps) * 100, (4 / totalSteps) * 100);
         }
         return (completed / totalSteps) * 100;
       }
@@ -1520,16 +1896,37 @@
           markStepComplete(agentIndex, 3);
           return;
         }
+        if (agentIndex === 4 && !appState.soHitlApproved) {
+          appState.soApprovalPreviewSeen = false;
+          appState.soHoldForReview = false;
+          appState.soManagerReviewedSoIds = new Set();
+          markStepComplete(agentIndex, 4);
+          return;
+        }
+        if (agentIndex === 5 && !appState.complianceHitlApproved) {
+          markStepComplete(agentIndex, 4);
+          return;
+        }
         markAgentComplete(agentIndex);
       }
 
       function getSimulationStepCount(agentIndex) {
         if (agentIndex === 2 && !appState.hitlApproved) return 3;
+        if (agentIndex === 4 && !appState.soHitlApproved) return 4;
+        if (agentIndex === 5 && !appState.complianceHitlApproved) return 4;
         return agents[agentIndex].steps.length;
       }
 
       function resolveAgentState(agentIndex) {
         if (agentIndex === 2 && !appState.hitlApproved) return "hitl";
+        if (agentIndex === 4 && !appState.soHitlApproved) {
+          const completed = appState.completedSteps[agentIndex] ?? 0;
+          if (completed >= 4 && completed < 5) return "hitl";
+        }
+        if (agentIndex === 5 && !appState.complianceHitlApproved) {
+          const completed = appState.completedSteps[agentIndex] ?? 0;
+          if (completed >= 4 && completed < 5) return "hitl";
+        }
         const total = agents[agentIndex].steps.length;
         const completed = appState.completedSteps[agentIndex] ?? 0;
         if (completed >= total) return "done";
@@ -1544,10 +1941,16 @@
       function beginAgentSimulation(agentIndex) {
         appState.currentAgent = agentIndex;
         appState.activeBottomPanel = null;
-        appState.hitlRejected = false;
         if (!appState.isRunning) startTimer();
         refreshAgentStates();
-        appState.agentStates[agentIndex] = agentIndex === 2 && !appState.hitlApproved ? "hitl" : "running";
+        appState.agentStates[agentIndex] =
+          agentIndex === 2 && !appState.hitlApproved
+            ? "hitl"
+            : agentIndex === 4 && !appState.soHitlApproved && (appState.completedSteps[agentIndex] ?? 0) >= 4
+              ? "hitl"
+              : agentIndex === 5 && !appState.complianceHitlApproved && (appState.completedSteps[agentIndex] ?? 0) >= 4
+                ? "hitl"
+                : "running";
         renderNav();
         renderPanel();
         updateStatusBlock();
@@ -1579,6 +1982,22 @@
         }
         if (idx === 2 && appState.hitlApproved) {
           return "Approved";
+        }
+        if (idx === 4 && !appState.soHitlApproved) {
+          const completed = appState.completedSteps[idx] ?? 0;
+          if (completed >= 4 && completed < 5) return "Awaiting manager approval";
+        }
+        if (idx === 4 && appState.soHitlApproved) {
+          const completed = appState.completedSteps[idx] ?? 0;
+          if (completed < 5) return "Approved";
+        }
+        if (idx === 5 && !appState.complianceHitlApproved) {
+          const completed = appState.completedSteps[idx] ?? 0;
+          if (completed >= 4 && completed < 5) return "Awaiting finance approval";
+        }
+        if (idx === 5 && appState.complianceHitlApproved) {
+          const completed = appState.completedSteps[idx] ?? 0;
+          if (completed < 5) return "Approved";
         }
         const state = appState.agentStates[idx];
         if (state === "running") return "In progress";
@@ -1613,7 +2032,14 @@
         const idx = appState.currentAgent;
         const a = agents[idx];
         const state = appState.agentStates[idx];
-        const headerStateText = idx === 2 && appState.hitlApproved ? "Approved — continuing" : a.stateText[state];
+        const headerStateText =
+          idx === 2 && appState.hitlApproved
+            ? "Approved — continuing"
+            : idx === 4 && appState.soHitlApproved && state === "running"
+              ? "Approved — continuing"
+              : idx === 5 && appState.complianceHitlApproved && state === "running"
+                ? "Approved — continuing"
+                : a.stateText[state];
         const headerDotPulse = state === "running" || state === "hitl";
         const currentProgress = appState.agentProgress[idx] ?? getInitialProgress(idx);
 
@@ -1633,7 +2059,7 @@
           initializeProgressState();
           agentNav.innerHTML = agents
             .map((a, i) => {
-              const state = appState.agentStates[i];
+              const state = navDisplayState(i);
               const active = i === appState.currentAgent ? "active" : "";
               return `
                 <div
@@ -1665,12 +2091,13 @@
         } else {
           const rows = agentNav.querySelectorAll(".agent-row");
           rows.forEach((row, i) => {
-            const state = appState.agentStates[i];
+            const state = navDisplayState(i);
             const isActive = i === appState.currentAgent;
             row.className = `agent-row ${state} ${isActive ? "active" : ""}`;
             const badge = row.querySelector(".state-badge");
             badge.className = `state-badge mono ${state}`;
             badge.textContent = fmtState(state);
+            row.setAttribute("aria-label", `Agent ${String(agents[i].id).padStart(2, "0")} ${agents[i].name} — ${state}`);
           });
         }
       }
@@ -1680,6 +2107,31 @@
         if (agentIndex === 2 && !appState.hitlApproved) {
           if (stepIndex < 2) return "done";
           if (stepIndex === 2) return "hitl";
+          return "pending";
+        }
+        if (agentIndex === 2 && appState.hitlApproved) {
+          const completed = appState.completedSteps[agentIndex] ?? 0;
+          if (stepIndex < completed) return "done";
+          return "pending";
+        }
+        if (agentIndex === 4 && !appState.soHitlApproved) {
+          if (stepIndex < 3) return "done";
+          if (stepIndex === 3) return "hitl";
+          return "pending";
+        }
+        if (agentIndex === 4 && appState.soHitlApproved) {
+          const completed = appState.completedSteps[agentIndex] ?? 0;
+          if (stepIndex < completed) return "done";
+          return "pending";
+        }
+        if (agentIndex === 5 && !appState.complianceHitlApproved) {
+          if (stepIndex < 3) return "done";
+          if (stepIndex === 3) return "hitl";
+          return "pending";
+        }
+        if (agentIndex === 5 && appState.complianceHitlApproved) {
+          const completed = appState.completedSteps[agentIndex] ?? 0;
+          if (stepIndex < completed) return "done";
           return "pending";
         }
         if (state === "done") return "done";
@@ -1695,13 +2147,75 @@
         return "pending";
       }
 
+      function isViewOutputEnabled(agentIdx) {
+        return appState.agentStates[agentIdx] === "done";
+      }
+
+      function isManualApprovalEnabled(agentIdx) {
+        const st = appState.agentStates[agentIdx];
+        return !appState.stepsAnimating && (st === "hitl" || st === "done");
+      }
+
+      function isValidateEnabled(agentIdx) {
+        return isManualApprovalEnabled(agentIdx);
+      }
+
+      function isNextEnabled(agentIdx) {
+        if (appState.stepsAnimating) return false;
+        return !nextDisabled(agentIdx);
+      }
+
+      function updateActionBarButtons() {
+        const idx = appState.currentAgent;
+        const manual = panelHost.querySelector(".action-bar .btn-amber");
+        const output = panelHost.querySelector(".action-bar .btn-blue");
+        const validateBtn = panelHost.querySelector("#actionBtnValidate");
+        const nextBtn = panelHost.querySelector("#actionBtnNext");
+        if (!manual || !output || !validateBtn || !nextBtn) return;
+        manual.disabled = !isManualApprovalEnabled(idx);
+        output.disabled = !isViewOutputEnabled(idx);
+        validateBtn.disabled = !isValidateEnabled(idx);
+        nextBtn.disabled = !isNextEnabled(idx);
+        manual.title = manual.disabled
+          ? "Available after processing reaches a checkpoint or completes"
+          : "Opens anomaly review";
+        output.title = output.disabled ? "Available after this agent finishes all steps" : "View structured agent output";
+        validateBtn.title = validateBtn.disabled
+          ? "Available after processing reaches a checkpoint or completes"
+          : "Run validation check";
+        nextBtn.title = nextBtn.disabled
+          ? appState.stepsAnimating
+            ? "Wait for processing to finish"
+            : idx === 2 && !appState.hitlApproved
+              ? "Approve or correct the HITL item first"
+              : idx === 5 && !appState.complianceHitlApproved && appState.agentStates[5] === "hitl"
+                ? "Approve finance sign-off in Manual approval first"
+                : idx === 5
+                  ? "End of pipeline"
+                  : "Go to next agent"
+          : "Go to next agent";
+      }
+
       function toggleBottomPanel(panelName) {
         const btns = document.querySelectorAll('.action-bar .btn');
         btns.forEach(b => b.classList.remove('btn-active'));
 
+        if (panelName === null) {
+          appState.activeBottomPanel = null;
+          const panelClose = document.querySelector(".bottom-panel-content");
+          if (panelClose) {
+            panelClose.classList.remove("open");
+            panelClose.innerHTML = "";
+          }
+          return;
+        }
+
         if (appState.activeBottomPanel === panelName) {
           appState.activeBottomPanel = null;
         } else {
+          if (panelName === "approval" && !isManualApprovalEnabled(appState.currentAgent)) return;
+          if (panelName === "output" && !isViewOutputEnabled(appState.currentAgent)) return;
+          if (panelName === "validate" && !isValidateEnabled(appState.currentAgent)) return;
           appState.activeBottomPanel = panelName;
           const btnClass = panelName === 'approval' ? 'btn-amber' : 
                            panelName === 'output' ? 'btn-blue' : 'btn-ghost';
@@ -1735,6 +2249,89 @@
         panel.classList.add('open');
       }
 
+      function renderSalesOrderBodyHtml(orderId) {
+        const doc = soDocuments[orderId];
+        if (!doc) return "";
+        const shipHtml = (doc.shipToLines || [])
+          .map((l) => `${l.replace(/</g, "&lt;")}`)
+          .join("<br />");
+        const soldHtml = (doc.soldToLines || [])
+          .map((l) => `${l.replace(/</g, "&lt;")}`)
+          .join("<br />");
+        const lineRows = (doc.lineItems || [])
+          .map(
+            (li) => `
+          <tr>
+            <td class="mat">${li.mat}</td>
+            <td>${li.desc}</td>
+            <td class="num">${li.qty}</td>
+            <td>${li.uom}</td>
+            <td class="num">${fmtUsdAmount(li.unit)}</td>
+            <td class="num">${fmtUsdAmount(li.net)}</td>
+          </tr>`
+          )
+          .join("");
+        const linesBlock =
+          doc.lineItems && doc.lineItems.length
+            ? `
+          <div class="so-line-table-wrap">
+            <table class="so-line-table" aria-label="Sales order line items">
+              <thead>
+                <tr>
+                  <th>Material</th>
+                  <th>Description</th>
+                  <th>Order qty</th>
+                  <th>UoM</th>
+                  <th>Unit price</th>
+                  <th>Net value</th>
+                </tr>
+              </thead>
+              <tbody>${lineRows}</tbody>
+            </table>
+          </div>
+          <div class="so-totals">
+            <div class="so-totals-row"><span>Subtotal (excl. charges)</span><strong>${doc.subtotal || doc.amount}</strong></div>
+            <div class="so-totals-row"><span>${doc.taxLabel || "Tax / charges"}</span><strong>${doc.tax || "—"}</strong></div>
+            <div class="so-totals-row"><span>Freight / forwarding</span><strong>${doc.freight || "USD 0.00"}</strong></div>
+            <div class="so-totals-row grand"><span>Total document currency</span><strong>${doc.amount}</strong></div>
+          </div>`
+            : "";
+        return `
+          <div class="so-doc-block">
+            <div class="so-doc-header">
+              <div class="so-id">${orderId}</div>
+              <div class="so-meta">${doc.customer} · ${doc.status}</div>
+            </div>
+            <div class="so-doc-grid">
+              <div class="so-doc-cell"><div class="so-doc-label">Customer (sold-to)</div><div class="so-doc-value">${doc.customerCode ? doc.customerCode + " · " : ""}${doc.customer}</div></div>
+              <div class="so-doc-cell"><div class="so-doc-label">Customer PO / ref.</div><div class="so-doc-value">${doc.customerPo || "—"}</div></div>
+              <div class="so-doc-cell"><div class="so-doc-label">Order date</div><div class="so-doc-value">${doc.orderDate || "—"}</div></div>
+              <div class="so-doc-cell"><div class="so-doc-label">Pricing date</div><div class="so-doc-value">${doc.pricingDate || "—"}</div></div>
+              <div class="so-doc-cell"><div class="so-doc-label">Requested ship date</div><div class="so-doc-value">${doc.requestedShipDate || "—"}</div></div>
+              <div class="so-doc-cell"><div class="so-doc-label">Sales org. / distr. ch.</div><div class="so-doc-value">${doc.salesOrg || "—"}<br />${doc.distChannel || ""}</div></div>
+              <div class="so-doc-cell"><div class="so-doc-label">Division</div><div class="so-doc-value">${doc.division || "—"}</div></div>
+              <div class="so-doc-cell"><div class="so-doc-label">Letter of credit</div><div class="so-doc-value">${doc.lcRef || "—"}</div></div>
+              <div class="so-doc-cell"><div class="so-doc-label">Incoterms</div><div class="so-doc-value">${doc.incoterm || "—"}</div></div>
+              <div class="so-doc-cell"><div class="so-doc-label">Incoterms location</div><div class="so-doc-value">${doc.incotermLocation || "—"}</div></div>
+              <div class="so-doc-cell"><div class="so-doc-label">Payment terms</div><div class="so-doc-value">${doc.paymentTerms || "—"}</div></div>
+              <div class="so-doc-cell"><div class="so-doc-label">Currency</div><div class="so-doc-value">${doc.currency || "USD"}</div></div>
+              <div class="so-doc-cell"><div class="so-doc-label">Plant / shipping point</div><div class="so-doc-value">${doc.plant || "—"}<br />${doc.shippingPoint || ""}</div></div>
+              <div class="so-doc-cell"><div class="so-doc-label">Route</div><div class="so-doc-value">${doc.route || "—"}</div></div>
+              <div class="so-doc-cell"><div class="so-doc-label">Batch / reference</div><div class="so-doc-value">${doc.referenceBatch || "—"}</div></div>
+              <div class="so-doc-cell"><div class="so-doc-label">Created by</div><div class="so-doc-value">${doc.createdBy || "—"}</div></div>
+              <div class="so-doc-cell"><div class="so-doc-label">Approver</div><div class="so-doc-value">${doc.approvedBy || "—"}</div></div>
+            </div>
+            <div class="so-doc-address">
+              <strong>Sold-to / bill-to</strong><br />${soldHtml}
+            </div>
+            <div class="so-doc-address">
+              <strong>Ship-to</strong> — ${doc.shipToName || ""}<br />${shipHtml}
+            </div>
+            ${linesBlock}
+          </div>
+        `;
+      }
+
       function renderSoOutputPanel() {
         const ids = Object.keys(soDocuments);
         return `
@@ -1758,28 +2355,131 @@
       function viewSalesOrder(orderId) {
         const doc = soDocuments[orderId];
         if (!doc || !soModalOverlay || !soModalBody) return;
+        const titleEl = document.querySelector(".so-modal-title");
+        if (titleEl) titleEl.textContent = "Sales Order Preview";
+        soModalBody.innerHTML = renderSalesOrderBodyHtml(orderId);
+        soModalOverlay.classList.add("open");
+      }
+
+      function openSoManagerAllSoPreview() {
+        const ids = Object.keys(soDocuments);
+        if (!ids.length || !soModalOverlay || !soModalBody) return;
+        appState.soApprovalPreviewSeen = true;
+        const titleEl = document.querySelector(".so-modal-title");
+        if (titleEl) titleEl.textContent = "Review all 3 sales orders";
         soModalBody.innerHTML = `
-          <div class="so-doc-header">
-            <div class="so-id">${orderId}</div>
-            <div class="so-meta">${doc.customer} · ${doc.status}</div>
-          </div>
-          <div class="so-doc-grid">
-            <div class="so-doc-cell"><div class="so-doc-label">Amount</div><div class="so-doc-value">${doc.amount}</div></div>
-            <div class="so-doc-cell"><div class="so-doc-label">Currency</div><div class="so-doc-value">${doc.currency}</div></div>
-            <div class="so-doc-cell"><div class="so-doc-label">Payment Terms</div><div class="so-doc-value">${doc.paymentTerms}</div></div>
-            <div class="so-doc-cell"><div class="so-doc-label">Incoterm</div><div class="so-doc-value">${doc.incoterm}</div></div>
-            <div class="so-doc-cell"><div class="so-doc-label">Items</div><div class="so-doc-value">${doc.items}</div></div>
-            <div class="so-doc-cell"><div class="so-doc-label">Created By</div><div class="so-doc-value">${doc.createdBy}</div></div>
-            <div class="so-doc-cell"><div class="so-doc-label">Approved By</div><div class="so-doc-value">${doc.approvedBy}</div></div>
-            <div class="so-doc-cell"><div class="so-doc-label">Posting Status</div><div class="so-doc-value">${doc.status}</div></div>
-          </div>
+          <p style="margin:0 0 12px;font-size:12px;color:var(--text-secondary);">Review the full details below. Close when finished, then use <strong>Approve all 3 SOs</strong> in the panel.</p>
+          ${ids
+            .map(
+              (id, i) => `
+            ${i > 0 ? '<hr style="border:0;border-top:1px solid var(--border);margin:16px 0;" />' : ""}
+            ${renderSalesOrderBodyHtml(id)}
+          `
+            )
+            .join("")}
         `;
         soModalOverlay.classList.add("open");
+        refreshSoApprovalPanelIfOpen();
+      }
+
+      function viewSalesOrderFromManager(orderId) {
+        appState.soManagerReviewedSoIds.add(orderId);
+        if (appState.soManagerReviewedSoIds.size >= 3) {
+          appState.soApprovalPreviewSeen = true;
+        }
+        viewSalesOrder(orderId);
+        refreshSoApprovalPanelIfOpen();
+      }
+
+      function refreshSoApprovalPanelIfOpen() {
+        if (appState.activeBottomPanel !== "approval" || appState.currentAgent !== 4) return;
+        const panel = document.querySelector(".bottom-panel-content");
+        if (!panel || !panel.classList.contains("open")) return;
+        panel.innerHTML = `<div style="padding:16px;">${renderApprovalContent(4)}</div>`;
       }
 
       function closeSalesOrderModal(ev) {
         if (ev && ev.target && ev.target.id !== "soModalOverlay") return;
         soModalOverlay.classList.remove("open");
+        const titleEl = document.querySelector(".so-modal-title");
+        if (titleEl) titleEl.textContent = "Sales Order Preview";
+        refreshSoApprovalPanelIfOpen();
+      }
+
+      const complianceModalOverlay = document.getElementById("complianceModalOverlay");
+      const complianceModalBody = document.getElementById("complianceModalBody");
+
+      function renderComplianceBundleHtml() {
+        const rows = complianceExportDocuments
+          .map(
+            (d, i) => `
+            <tr>
+              <td class="mono" style="width:34px;font-size:10px;color:var(--text-muted);">${i + 1}</td>
+              <td>
+                <span class="compliance-doc-code">${d.code}</span>
+                <strong style="display:block;margin-top:4px;font-size:12px;">${d.name}</strong>
+                <span style="display:block;margin-top:4px;color:var(--text-secondary);font-size:10px;line-height:1.45;">${d.detail}</span>
+              </td>
+              <td class="mono" style="font-size:10px;color:var(--green);white-space:nowrap;">QC ✓</td>
+            </tr>`
+          )
+          .join("");
+        return `
+          <p class="compliance-bundle-intro">
+            <strong>What you are approving:</strong> finance sign-off releases this entire <strong>18-document</strong> export bundle to <strong>ANB Bank</strong> (LC advising) and <strong>Coral International</strong> (buyer). Files were generated from posted SOs <strong>SO-45912 / 45913 / 45914</strong> and validated against <strong>LC-ANB-2026-44821</strong> (field-for-field pre-check PASS).
+          </p>
+          <div style="overflow-x:auto;">
+            <table class="compliance-doc-table" aria-label="Documents in export bundle">
+              <thead>
+                <tr><th>#</th><th>Document</th><th>Check</th></tr>
+              </thead>
+              <tbody>${rows}</tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      function openComplianceBundlePreview() {
+        if (!complianceModalOverlay || !complianceModalBody) return;
+        const titleEl = document.getElementById("complianceModalTitle");
+        if (titleEl) titleEl.textContent = "Export document bundle (18 files)";
+        complianceModalBody.innerHTML = renderComplianceBundleHtml();
+        complianceModalOverlay.classList.add("open");
+      }
+
+      function closeComplianceModal(ev) {
+        if (ev && ev.target && ev.target.id !== "complianceModalOverlay") return;
+        if (complianceModalOverlay) complianceModalOverlay.classList.remove("open");
+      }
+
+      function soHoldForReviewManager() {
+        appState.soHoldForReview = true;
+        toggleBottomPanel(null);
+        renderPanel();
+        updateStatusBlock();
+      }
+
+      function approveComplianceHitl() {
+        appState.complianceHitlApproved = true;
+        appState.complianceHoldForReview = false;
+        agents[5].steps[3][1] =
+          "Finance released the bundle within SLA. All 18 documents are cleared for bank submission.";
+        agents[5].steps[3][2] = "Signed off · 18 docs";
+        appState.activeBottomPanel = null;
+        toggleBottomPanel(null);
+        appState.resumeStepByAgent[5] = appState.completedSteps[5] || 4;
+        refreshAgentStates();
+        appState.agentStates[5] = "running";
+        renderNav();
+        renderPanel();
+        updateStatusBlock();
+      }
+
+      function complianceHoldForReview() {
+        appState.complianceHoldForReview = true;
+        toggleBottomPanel(null);
+        renderPanel();
+        updateStatusBlock();
       }
 
       function approveHitl(idx) {
@@ -1789,9 +2489,24 @@
         }
         appState.hitlApproved = true;
         appState.hitlRejected = false;
+        appState.mapperManualCode = null;
         appState.activeBottomPanel = null;
-        finalizeAgentProgress(2);
+        appState.resumeStepByAgent[2] = appState.completedSteps[2] || 3;
         refreshAgentStates();
+        appState.agentStates[2] = "running";
+        renderNav();
+        renderPanel();
+        updateStatusBlock();
+      }
+
+      function approveSoManagerHitl() {
+        appState.soHitlApproved = true;
+        appState.soHoldForReview = false;
+        appState.activeBottomPanel = null;
+        toggleBottomPanel(null);
+        appState.resumeStepByAgent[4] = appState.completedSteps[4] || 4;
+        refreshAgentStates();
+        appState.agentStates[4] = "running";
         renderNav();
         renderPanel();
         updateStatusBlock();
@@ -1802,9 +2517,32 @@
           toggleBottomPanel(null);
           return;
         }
-        appState.activeBottomPanel = null;
         appState.hitlRejected = true;
+        appState.mapperManualCode = null;
+        toggleBottomPanel(null);
+        refreshAgentStates();
+        renderNav();
         renderPanel();
+        updateStatusBlock();
+      }
+
+      function saveHitlCorrectCode() {
+        const el = document.getElementById("hitlCorrectCodeInput");
+        const code = el && el.value.trim();
+        if (!code) {
+          if (el) el.focus();
+          return;
+        }
+        appState.mapperManualCode = code;
+        appState.hitlRejected = false;
+        appState.hitlApproved = true;
+        appState.activeBottomPanel = null;
+        appState.resumeStepByAgent[2] = appState.completedSteps[2] || 3;
+        refreshAgentStates();
+        appState.agentStates[2] = "running";
+        renderNav();
+        renderPanel();
+        updateStatusBlock();
       }
 
       function nextLabel(idx) {
@@ -1818,6 +2556,7 @@
 
       function nextDisabled(idx) {
         if (idx === 2 && !appState.hitlApproved) return true;
+        if (idx === 4 && !appState.soHitlApproved) return true;
         if (idx === 5) return true;
         return false;
       }
@@ -1825,33 +2564,74 @@
       function goNext() {
         const idx = appState.currentAgent;
         if (idx >= agents.length - 1) return;
+        if (!isNextEnabled(idx)) return;
         if (idx === 2 && !appState.hitlApproved) return;
+        if (idx === 4 && !appState.soHitlApproved) return;
         selectAgent(idx + 1);
       }
 
       function renderApprovalContent(idx) {
         if (idx === 4) {
+          const ids = Object.keys(soDocuments);
           return `
             <div class="anom-row"><div class="anom-dot" style="background:var(--amber)"></div><div>
               <div class="anom-item">Sales Order approval pending — 3 SOs awaiting manager sign-off</div>
               <div class="anom-detail">SO-45912, SO-45913, SO-45914 · Total USD 300,672 · Coral International</div>
             </div></div>
-            <div class="modal-actions" style="margin-top:12px;">
-              <button class="btn btn-blue" onclick="toggleBottomPanel(null)">Approve all 3 SOs</button>
-              <button class="btn btn-ghost" onclick="toggleBottomPanel(null)">Hold for review</button>
+            <div class="modal-sub" style="margin-top:12px;font-size:11px;color:var(--text-secondary);line-height:1.5;">
+              Optional: open order details with <strong>View all 3 in one window</strong> or each <strong>View</strong> below. You can approve at any time.
+            </div>
+            <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+              <button type="button" class="btn btn-blue" onclick="openSoManagerAllSoPreview()">View all 3 in one window</button>
+            </div>
+            <div class="so-list" style="margin-top:12px;">
+              ${ids
+                .map(
+                  (id) => `
+                <div class="so-row">
+                  <div>
+                    <div class="so-id">${id}</div>
+                    <div class="so-meta">Coral International · Pending manager approval</div>
+                  </div>
+                  <button type="button" class="btn btn-blue" onclick="viewSalesOrderFromManager('${id}')">View</button>
+                </div>
+              `
+                )
+                .join("")}
+            </div>
+            <div class="modal-actions" style="margin-top:16px;flex-wrap:wrap;">
+              <button type="button" class="btn btn-blue" onclick="approveSoManagerHitl()" title="Approve and continue pipeline">Approve all 3 SOs</button>
+              <button type="button" class="btn btn-ghost" onclick="soHoldForReviewManager()" title="Close without approving; SOs stay in SAP pending your decision">Hold for review</button>
             </div>
           `;
         }
         if (idx === 5) {
           return `
-            <div class="anom-row"><div class="anom-dot" style="background:var(--amber)"></div><div>
-              <div class="anom-item">18 export documents ready for finance sign-off</div>
-              <div class="anom-detail">BL, LC COPY + ORIGINAL, packing lists, CO · LC pre-check: PASS</div>
-              <div class="anom-detail">LC expiry: 45+ days · No discrepancies detected · Ready to dispatch</div>
-            </div></div>
-            <div class="modal-actions" style="margin-top:12px;">
-              <button class="btn btn-blue" onclick="toggleBottomPanel(null)">Sign off and dispatch to bank</button>
-              <button class="btn btn-ghost" onclick="toggleBottomPanel(null)">Hold — request amendment</button>
+            <div class="modal-head">
+              <div class="modal-ico">⚠️</div>
+              <div>
+                <div class="modal-title">Manual review required — finance sign-off</div>
+                <div class="modal-sub">You are asked to approve release of the export document bundle below. Open the bundle to see exactly what will be sent to the bank and the buyer before you sign off.</div>
+              </div>
+            </div>
+            <div class="anom-row" style="margin-top:10px;">
+              <div class="anom-dot" style="background:var(--amber)"></div>
+              <div>
+                <div class="anom-item">Finance checkpoint — full document set</div>
+                <div class="anom-detail">BL, LC (copy + original), packing lists, certificates · LC pre-check: PASS · 45+ days to expiry</div>
+              </div>
+            </div>
+            <div style="margin-top:14px;padding:12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--card-surface);">
+              <div class="small-title mono" style="margin-bottom:8px;">Bundle contents</div>
+              <p style="margin:0 0 10px;font-size:12px;color:var(--text-secondary);line-height:1.5;">
+                <strong>18 files</strong> generated for SOs SO-45912, SO-45913, SO-45914 — aligned to LC <strong>LC-ANB-2026-44821</strong>. Use <strong>View export bundle</strong> for the full line-by-line list (draft BLs per container, invoices, LC pack, certificates, insurance, etc.).
+              </p>
+              <button type="button" class="btn btn-blue" onclick="openComplianceBundlePreview()">View export bundle (18 documents)</button>
+            </div>
+            <div class="modal-actions" style="margin-top:16px;">
+              <button type="button" class="btn btn-blue" style="background:var(--green-light);border-color:var(--green-border);color:var(--green)" onclick="approveComplianceHitl()">Approve finance sign-off</button>
+              <button type="button" class="btn btn-ghost" style="background:var(--red-light);border-color:var(--red-border);color:var(--red)" onclick="complianceHoldForReview()">Hold — request amendment</button>
+              <button class="btn btn-ghost" onclick="toggleBottomPanel(null)">Close</button>
             </div>
           `;
         }
@@ -1872,8 +2652,8 @@
               </div>
             </div>
             <div class="modal-actions" style="margin-top:16px;">
-              <button class="btn btn-blue" style="background:var(--green-light);border-color:var(--green-border);color:var(--green)" onclick="approveHitl(2)">Approve suggested code</button>
-              <button class="btn btn-ghost" style="background:var(--red-light);border-color:var(--red-border);color:var(--red)" onclick="rejectHitl(2)">Reject — enter correct code</button>
+              <button type="button" class="btn btn-blue" style="background:var(--green-light);border-color:var(--green-border);color:var(--green)" onclick="approveHitl(2)">Approve suggested code</button>
+              <button type="button" class="btn btn-ghost" style="background:var(--red-light);border-color:var(--red-border);color:var(--red)" onclick="rejectHitl(2)">Reject — enter correct code</button>
               <button class="btn btn-ghost" onclick="toggleBottomPanel(null)">Close</button>
             </div>
           `;
@@ -1896,7 +2676,78 @@
         const stepsContainer = document.getElementById("stepsContainer");
         const logsContainer = document.getElementById("logsContainer");
         const simulationSteps = getSimulationStepCount(idx);
-        markStepComplete(idx, 0);
+
+        if (idx === 2 && appState.hitlRejected && !appState.hitlApproved) {
+          if (appState.simTimeout) clearTimeout(appState.simTimeout);
+          appState.stepsAnimating = false;
+          stepsContainer.innerHTML = "";
+          if (logsContainer) {
+            Array.from(logsContainer.children).forEach((child) => {
+              if (!child.classList.contains("log-head")) child.remove();
+            });
+          }
+          for (let i = 0; i < 3; i++) {
+            const s = a.steps[i];
+            const sc = stepClass(idx, i);
+            const hitl = sc === "hitl";
+            const showLine = i < a.steps.length - 1;
+            const circleClass = sc === "done" ? "done" : hitl ? "hitl" : "";
+            const chipClass = hitl ? "metric-chip mono hitl" : "metric-chip mono";
+            const stepEl = document.createElement("div");
+            stepEl.className = "step-item";
+            stepEl.id = `step-item-${i}`;
+            stepEl.style.opacity = "1";
+            stepEl.style.animation = "none";
+            stepEl.innerHTML = `
+              <div class="step-rail">
+                <div class="step-circle ${circleClass}">${i + 1}</div>
+                ${showLine ? '<div class="step-line"></div>' : ""}
+              </div>
+              <div>
+                <div class="step-title ${hitl ? "hitl" : ""}">${s[0]}</div>
+                <div class="step-sub">${s[1]}</div>
+              </div>
+              <div class="${chipClass}">${s[2]}</div>
+            `;
+            stepsContainer.appendChild(stepEl);
+            if (hitl && !stepEl.querySelector(".hitl-inline")) {
+              const hitlEl = document.createElement("div");
+              hitlEl.className = "hitl-inline mono";
+              hitlEl.innerHTML = '<span class="live-dot"></span>Awaiting human review';
+              const stepContent = stepEl.children[1];
+              if (stepContent) stepContent.appendChild(hitlEl);
+            }
+          }
+          if (logsContainer) {
+            for (let i = 0; i < a.logs.length; i++) {
+              const line = getAgentTerminalLogLine(2, i);
+              if (!line) continue;
+              const logEl = document.createElement("div");
+              logEl.className = `ll ${terminalLogNeedsAwaitingStyle(line) ? "hitl" : ""}`;
+              logEl.style.animation = "none";
+              logEl.innerHTML = `
+                <span class="ll-time mono">[${formatTime(appState.elapsedTime + 8 + i)}]</span>
+                <span class="ll-agent mono">${a.name}</span>
+                <span class="ll-msg">${line}</span>
+              `;
+              logsContainer.appendChild(logEl);
+            }
+          }
+          markStepComplete(2, 3);
+          refreshAgentStates();
+          renderNav();
+          updateStatusBlock();
+          syncCurrentHeaderState();
+          updateActionBarButtons();
+          return;
+        }
+
+        const resumeFrom = appState.resumeStepByAgent[idx] ?? 0;
+        const startStep = Math.max(0, Math.min(resumeFrom, simulationSteps));
+        if (appState.resumeStepByAgent[idx] !== undefined) {
+          delete appState.resumeStepByAgent[idx];
+        }
+        markStepComplete(idx, startStep);
         
         if (appState.simTimeout) clearTimeout(appState.simTimeout);
         stepsContainer.innerHTML = "";
@@ -1909,7 +2760,50 @@
             });
         }
 
-        let currentStep = 0;
+        for (let i = 0; i < startStep; i++) {
+            const s = a.steps[i];
+            const sc = stepClass(idx, i);
+            const hitl = sc === "hitl";
+            const showLine = i < a.steps.length - 1;
+            const circleClass = sc === "done" ? "done" : hitl ? "hitl" : "";
+            const chipClass = hitl ? "metric-chip mono hitl" : "metric-chip mono";
+
+            const stepEl = document.createElement("div");
+            stepEl.className = "step-item";
+            stepEl.id = `step-item-${i}`;
+            stepEl.style.opacity = "1";
+            stepEl.style.animation = "none";
+            stepEl.innerHTML = `
+              <div class="step-rail">
+                <div class="step-circle ${circleClass}">${i + 1}</div>
+                ${showLine ? '<div class="step-line"></div>' : ""}
+              </div>
+              <div>
+                <div class="step-title ${hitl ? "hitl" : ""}">${s[0]}</div>
+                <div class="step-sub">${s[1]}</div>
+              </div>
+              <div class="${chipClass}">${s[2]}</div>
+            `;
+            stepsContainer.appendChild(stepEl);
+        }
+
+        if (logsContainer) {
+            for (let i = 0; i < startStep; i++) {
+                const line = getAgentTerminalLogLine(idx, i);
+                if (!line) continue;
+                const logEl = document.createElement("div");
+                logEl.className = `ll ${terminalLogNeedsAwaitingStyle(line) ? "hitl" : ""}`;
+                logEl.style.animation = "none";
+                logEl.innerHTML = `
+                    <span class="ll-time mono">[${formatTime(appState.elapsedTime + 8 + i)}]</span>
+                    <span class="ll-agent mono">${a.name}</span>
+                    <span class="ll-msg">${line}</span>
+                `;
+                logsContainer.appendChild(logEl);
+            }
+        }
+
+        let currentStep = startStep;
         
         function renderNextStep() {
             if (currentStep > simulationSteps) return;
@@ -1932,13 +2826,17 @@
                     const chip = prevStepEl.querySelector(".metric-chip");
                     if(chip) {
                         chip.innerHTML = a.steps[currentStep - 1][2];
+                        chip.classList.toggle("hitl", hitl);
                     }
                     
                     if (hitl && !prevStepEl.querySelector(".hitl-inline")) {
                         const hitlEl = document.createElement("div");
                         hitlEl.className = "hitl-inline mono";
                         hitlEl.innerHTML = '<span class="live-dot"></span>Awaiting human review';
-                        prevStepEl.querySelector("div:last-child").previousElementSibling.appendChild(hitlEl);
+                        const stepContent = prevStepEl.children[1];
+                        if (stepContent) {
+                          stepContent.appendChild(hitlEl);
+                        }
                     }
                 }
                 markStepComplete(idx, currentStep);
@@ -1968,10 +2866,10 @@
                 `;
                 stepsContainer.appendChild(stepEl);
                 
-                if (logsContainer && currentStep < a.logs.length) {
-                    const line = a.logs[currentStep];
+                const line = getAgentTerminalLogLine(idx, currentStep);
+                if (logsContainer && line) {
                     const logEl = document.createElement("div");
-                    logEl.className = `ll ${line.includes("HITL") || line.includes("checkpoint") ? "hitl" : ""}`;
+                    logEl.className = `ll ${terminalLogNeedsAwaitingStyle(line) ? "hitl" : ""}`;
                     logEl.style.animation = "slide-in 150ms ease both";
                     logEl.innerHTML = `
                         <span class="ll-time mono">[${formatTime(appState.elapsedTime + 8 + currentStep)}]</span>
@@ -1982,13 +2880,23 @@
                 }
                 
                 currentStep++;
+                appState.stepsAnimating = true;
                 appState.simTimeout = setTimeout(renderNextStep, 4000);
+                updateActionBarButtons();
             } else {
+                appState.stepsAnimating = false;
                 finalizeAgentProgress(idx);
                 refreshAgentStates();
                 renderNav();
                 updateStatusBlock();
                 syncCurrentHeaderState();
+                if (appState.agentStates[idx] === "done") {
+                  const metricsGrid = panelHost.querySelector(".metrics-grid");
+                  const bannerStack = panelHost.querySelector(".banner-stack");
+                  if (metricsGrid) metricsGrid.classList.remove("is-hidden");
+                  if (bannerStack) bannerStack.classList.remove("is-hidden");
+                }
+                updateActionBarButtons();
             }
         }
         
@@ -1999,8 +2907,16 @@
         const idx = appState.currentAgent;
         const a = agents[idx];
         const state = appState.agentStates[idx];
+        const showEndCards = state === "done";
         const headerDotPulse = state === "running" || state === "hitl";
-        const headerStateText = idx === 2 && appState.hitlApproved ? "Approved — continuing" : a.stateText[state];
+        const headerStateText =
+          idx === 2 && appState.hitlApproved
+            ? "Approved — continuing"
+            : idx === 4 && appState.soHitlApproved && state === "running"
+              ? "Approved — continuing"
+              : idx === 5 && appState.complianceHitlApproved && state === "running"
+                ? "Approved — continuing"
+                : a.stateText[state];
         const currentProgress = appState.agentProgress[idx] ?? getInitialProgress(idx);
 
         const bannerHtml = a.banners
@@ -2046,7 +2962,7 @@
               <div class="steps-card card">
                 <div class="small-title mono">Processing steps</div>
                 <div class="steps" id="stepsContainer"></div>
-                <div class="metrics-grid">
+                <div class="metrics-grid ${showEndCards ? "" : "is-hidden"}">
                   ${a.metrics
                     .map(
                       (m) => `
@@ -2058,7 +2974,33 @@
                     )
                     .join("")}
                 </div>
-                ${idx === 2 && appState.hitlRejected ? '<div class="inline-error">Rejected. Please enter the correct ERP code manually and re-run.</div>' : ""}
+                ${
+                  idx === 2 && appState.hitlRejected
+                    ? `
+                <div class="inline-error">Rejected. Enter the correct ERP product code below, then save to continue the pipeline.</div>
+                <div style="margin-top:10px;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--card-surface);">
+                  <div class="small-title mono" style="margin-bottom:6px;">Correct ERP code</div>
+                  <input type="text" id="hitlCorrectCodeInput" class="mono" style="width:100%;box-sizing:border-box;padding:8px;border-radius:8px;border:1px solid var(--border);font-size:12px;" placeholder="e.g. NAQUA-FILTER-XLR-8B" autocomplete="off" />
+                  <button type="button" class="btn btn-blue" style="margin-top:8px;" onclick="saveHitlCorrectCode()">Save correction &amp; continue</button>
+                </div>`
+                    : ""
+                }
+                ${
+                  idx === 4 && appState.soHoldForReview && !appState.soHitlApproved
+                    ? `
+                <div style="margin-top:10px;padding:9px 10px;border:1px solid var(--amber-border);border-radius:var(--radius-sm);background:var(--amber-light);color:var(--amber);font-size:11px;line-height:1.45;">
+                  <strong>Hold for review:</strong> Manager sign-off was deferred. The three SOs remain posted in SAP awaiting approval. Open <strong>Manual approval</strong> when ready to review, then approve or hold again.
+                </div>`
+                    : ""
+                }
+                ${
+                  idx === 5 && appState.complianceHoldForReview && !appState.complianceHitlApproved
+                    ? `
+                <div style="margin-top:10px;padding:9px 10px;border:1px solid var(--amber-border);border-radius:var(--radius-sm);background:var(--amber-light);color:var(--amber);font-size:11px;line-height:1.45;">
+                  <strong>Hold for review:</strong> Bank dispatch was deferred. The export bundle remains in finance queue. Open <strong>Manual approval</strong> when ready, then approve or hold again.
+                </div>`
+                    : ""
+                }
               </div>
 
               <div class="log-card card">
@@ -2066,23 +3008,35 @@
                 <div class="log-body mono" aria-live="polite" id="logsContainer">
                   <div class="log-head"><span class="tl-dot tl-red"></span><span class="tl-dot tl-amber"></span><span class="tl-dot tl-green"></span><span>agent_orchestrator --live --v4.0</span></div>
                 </div>
-                <div class="banner-stack">${bannerHtml}</div>
+                <div class="banner-stack ${showEndCards ? "" : "is-hidden"}">${bannerHtml}</div>
               </div>
             </div>
 
             <div class="action-bar card">
               <span class="action-label">Actions:</span>
-              <button class="btn btn-amber" onclick="toggleBottomPanel('approval')" title="Opens anomaly review">Manual approval</button>
-              <button class="btn btn-blue" onclick="toggleBottomPanel('output')">View agent output</button>
-              <button class="btn btn-ghost" onclick="toggleBottomPanel('validate')">Validate</button>
-              <button class="btn btn-next ${idx === 5 ? "complete" : ""}" onclick="goNext()" ${nextDisabled(idx) ? "disabled" : ""}>${nextLabel(idx)}</button>
+              <button type="button" class="btn btn-amber" onclick="toggleBottomPanel('approval')" title="Opens anomaly review" disabled>Manual approval</button>
+              <button type="button" class="btn btn-blue" onclick="toggleBottomPanel('output')" title="View structured agent output" disabled>View agent output</button>
+              <button type="button" id="actionBtnValidate" class="btn btn-ghost" onclick="toggleBottomPanel('validate')" disabled>Validate</button>
+              <button type="button" id="actionBtnNext" class="btn btn-next ${idx === 5 ? "complete" : ""}" onclick="goNext()" disabled>${nextLabel(idx)}</button>
             </div>
             <div class="bottom-panel-content card"></div>
           </div>
         `;
         
         startAgentSimulation(idx);
+        updateActionBarButtons();
       }
+
+      window.rejectHitl = rejectHitl;
+      window.saveHitlCorrectCode = saveHitlCorrectCode;
+      window.approveSoManagerHitl = approveSoManagerHitl;
+      window.openSoManagerAllSoPreview = openSoManagerAllSoPreview;
+      window.viewSalesOrderFromManager = viewSalesOrderFromManager;
+      window.soHoldForReviewManager = soHoldForReviewManager;
+      window.approveComplianceHitl = approveComplianceHitl;
+      window.complianceHoldForReview = complianceHoldForReview;
+      window.openComplianceBundlePreview = openComplianceBundlePreview;
+      window.closeComplianceModal = closeComplianceModal;
 
       renderNav();
       beginAgentSimulation(0);
