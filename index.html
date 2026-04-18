@@ -1,0 +1,2092 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sales Order Automation using Agentic AI · NAQUA AgentOS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" hrefin="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+        --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+        --bg: #f7f8fa;
+        --card-bg: #ffffff;
+        --card-surface: #f0f2f7;
+        --border: #e2e6ef;
+        --border-strong: #cbd2e0;
+        --text-primary: #1a1a2e;
+        --text-secondary: #5a6478;
+        --text-muted: #9ca3af;
+
+        --blue: #2563eb;
+        --blue-light: #eff4ff;
+        --blue-border: #bfcfff;
+        --teal: #0d9488;
+        --teal-light: #f0fdfa;
+        --teal-border: #99f6e4;
+        --purple: #7c3aed;
+        --purple-light: #f5f3ff;
+        --purple-border: #ddd6fe;
+        --amber: #d97706;
+        --amber-light: #fffbeb;
+        --amber-border: #fde68a;
+        --green: #16a34a;
+        --green-light: #f0fdf4;
+        --green-border: #bbf7d0;
+        --red: #dc2626;
+        --red-light: #fef2f2;
+        --red-border: #fecaca;
+        --violet: #6d28d9;
+        --violet-light: #ede9fe;
+        --violet-border: #c4b5fd;
+
+        --hero-g1: #1e3a8a;
+        --hero-g2: #1e40af;
+        --hero-g3: #2563eb;
+        --hero-g4: #3b82f6;
+        --hero-text-soft: rgba(255, 255, 255, 0.75);
+        --hero-card-bg: rgba(255, 255, 255, 0.12);
+        --hero-card-border: rgba(255, 255, 255, 0.2);
+        --hero-badge-bg: rgba(255, 255, 255, 0.15);
+        --hero-badge-border: rgba(255, 255, 255, 0.25);
+        --hero-dot-grid: rgba(255, 255, 255, 0.07);
+        --hero-dot: #4ade80;
+
+        --terminal-bg: #0f172a;
+        --terminal-head: #94a3b8;
+        --terminal-time: #475569;
+        --terminal-msg: #cbd5e1;
+        --terminal-hitl: #fde68a;
+        --terminal-hitl-bg: rgba(245, 158, 11, 0.08);
+
+        --radius-card: 14px;
+        --radius-sm: 8px;
+        --space-container: 24px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text-primary);
+        font-family: var(--font-sans);
+      }
+
+      button,
+      [role="button"] {
+        font-family: inherit;
+      }
+
+      .mono {
+        font-family: var(--font-mono);
+      }
+
+      .app-wrap {
+        width: min(1280px, 100%);
+        margin: 0 auto;
+        background: var(--bg);
+      }
+
+      .hero {
+        position: relative;
+        padding: 48px 40px 40px;
+        background-image:
+          radial-gradient(var(--hero-dot-grid) 1px, transparent 1px),
+          linear-gradient(135deg, var(--hero-g1) 0%, var(--hero-g2) 40%, var(--hero-g3) 70%, var(--hero-g4) 100%);
+        background-size: 28px 28px, cover;
+        background-position: 0 0, center;
+      }
+
+      .hero-content {
+        max-width: 980px;
+        margin: 0 auto;
+      }
+
+      .live-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--hero-badge-border);
+        background: var(--hero-badge-bg);
+        color: var(--card-bg);
+        font-size: 11px;
+        letter-spacing: 0.02em;
+      }
+
+      .live-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--hero-dot);
+        animation: pulse-dot 1.5s infinite;
+      }
+
+      .hero h1 {
+        margin: 18px 0 12px;
+        font-size: 30px;
+        line-height: 1.2;
+        color: var(--card-bg);
+      }
+
+      .hero h1 span {
+        display: block;
+        color: #93c5fd;
+      }
+
+      .hero p {
+        margin: 0;
+        max-width: 560px;
+        color: var(--hero-text-soft);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .kpi-grid {
+        margin-top: 24px;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .kpi-card {
+        border: 1px solid var(--hero-card-border);
+        background: var(--hero-card-bg);
+        border-radius: var(--radius-card);
+        padding: 14px;
+        animation: kpi-enter 250ms ease forwards;
+        opacity: 0;
+      }
+
+      .kpi-card:nth-child(1) { animation-delay: 0ms; }
+      .kpi-card:nth-child(2) { animation-delay: 100ms; }
+      .kpi-card:nth-child(3) { animation-delay: 200ms; }
+      .kpi-card:nth-child(4) { animation-delay: 300ms; }
+
+      .kpi-value {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--card-bg);
+      }
+
+      .kpi-label {
+        margin-top: 2px;
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.65);
+      }
+
+      .kpi-delta {
+        margin-top: 7px;
+        font-size: 10px;
+        color: #86efac;
+      }
+
+      .features-strip {
+        background: var(--card-bg);
+        border-bottom: 1px solid var(--border);
+        padding: 18px 24px;
+      }
+
+      .feature-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        border-radius: var(--radius-sm);
+        padding: 6px 10px;
+        border: 1px solid var(--chip-border);
+        background: var(--chip-bg);
+        color: var(--chip-fg);
+        font-size: 11px;
+        font-weight: 500;
+      }
+
+      .chip-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+        background: var(--chip-fg);
+      }
+
+      .chip.blue { --chip-bg: var(--blue-light); --chip-border: var(--blue-border); --chip-fg: var(--blue); }
+      .chip.purple { --chip-bg: var(--purple-light); --chip-border: var(--purple-border); --chip-fg: var(--purple); }
+      .chip.amber { --chip-bg: var(--amber-light); --chip-border: var(--amber-border); --chip-fg: var(--amber); }
+      .chip.green { --chip-bg: var(--green-light); --chip-border: var(--green-border); --chip-fg: var(--green); }
+      .chip.teal { --chip-bg: var(--teal-light); --chip-border: var(--teal-border); --chip-fg: var(--teal); }
+
+      .app-shell {
+        display: grid;
+        grid-template-columns: 220px 1fr;
+        min-height: 640px;
+      }
+
+      .left-nav {
+        background: var(--card-bg);
+        border-right: 1px solid var(--border);
+        padding: 16px 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .panel-label {
+        font-size: 9px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+
+      .agent-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .agent-row {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--card-bg);
+        padding: 8px 10px;
+        display: grid;
+        grid-template-columns: auto auto 1fr auto;
+        gap: 6px 7px;
+        align-items: center;
+        cursor: pointer;
+        transition: background 150ms ease, opacity 150ms ease, border-color 150ms ease;
+      }
+
+      .agent-row:hover {
+        background: var(--card-surface);
+      }
+
+      .agent-row.idle {
+        opacity: 0.55;
+      }
+
+      .agent-row.running {
+        border-color: var(--blue-border);
+      }
+
+      .agent-row.hitl {
+        border-color: var(--amber-border);
+        background: var(--amber-light);
+      }
+
+      .agent-row.done {
+        border-color: var(--green-border);
+        background: var(--green-light);
+      }
+
+      .agent-row.error {
+        border-color: var(--red-border);
+        background: var(--red-light);
+      }
+
+      .agent-row.active {
+        background: var(--blue-light);
+        border-color: var(--blue);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+        transform: translateX(4px);
+        position: relative;
+        z-index: 2;
+        opacity: 1;
+      }
+
+      .agent-row.active::after {
+        content: "";
+        position: absolute;
+        right: -6px;
+        top: 50%;
+        transform: translateY(-50%) rotate(45deg);
+        width: 10px;
+        height: 10px;
+        background: var(--blue);
+        border-radius: 2px;
+        box-shadow: 2px -2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      .agent-row.hitl.active {
+        background: #fffbeb;
+        border-color: var(--amber);
+      }
+
+      .agent-row.hitl.active::after {
+        background: var(--amber);
+      }
+
+      .agent-row.done.active {
+        background: #f0fdf4;
+        border-color: var(--green);
+      }
+
+      .agent-row.done.active::after {
+        background: var(--green);
+      }
+
+      .agent-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 999px;
+        background: var(--agent-color);
+      }
+
+      .agent-row.running .agent-dot,
+      .agent-row.hitl .agent-dot {
+        animation: pulse-dot 0.8s infinite;
+      }
+
+      .agent-num {
+        font-size: 9px;
+        color: var(--text-muted);
+      }
+
+      .agent-name {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text-primary);
+        flex: 1;
+      }
+
+      .state-badge {
+        border-radius: 999px;
+        padding: 2px 7px;
+        font-size: 9px;
+        border: 1px solid var(--border);
+        color: var(--text-secondary);
+        background: var(--card-bg);
+      }
+
+      .state-badge.running { color: var(--blue); border-color: var(--blue-border); background: var(--blue-light); }
+      .state-badge.hitl { color: var(--amber); border-color: var(--amber-border); background: var(--amber-light); }
+      .state-badge.done { color: var(--green); border-color: var(--green-border); background: var(--green-light); }
+      .state-badge.error { color: var(--red); border-color: var(--red-border); background: var(--red-light); }
+
+      .status-block {
+        margin-top: auto;
+        border: 1px solid var(--border);
+        background: var(--card-surface);
+        border-radius: 10px;
+        padding: 10px;
+        font-size: 10px;
+        display: grid;
+        gap: 6px;
+      }
+
+      .status-row {
+        display: flex;
+        justify-content: space-between;
+        color: var(--text-secondary);
+        gap: 10px;
+      }
+
+      .status-row span:last-child {
+        color: var(--text-primary);
+        font-family: var(--font-mono);
+        font-weight: 500;
+      }
+
+      .right-panel {
+        padding: 16px;
+      }
+
+      .agent-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        animation: panel-in 200ms ease;
+      }
+
+      .card {
+        border-radius: var(--radius-card);
+        border: 1px solid var(--border);
+        background: var(--card-bg);
+      }
+
+      .agent-header {
+        padding: 14px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: start;
+        gap: 12px;
+      }
+
+      .header-main {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+      }
+
+      .agent-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        font-size: 21px;
+        background: var(--theme-light);
+        border: 1px solid var(--theme-border);
+      }
+
+      .header-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .header-sub {
+        margin-top: 2px;
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+
+      .tool-list {
+        margin-top: 8px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .tool-pill {
+        border: 1px solid var(--border);
+        background: var(--card-surface);
+        color: var(--text-secondary);
+        border-radius: 999px;
+        padding: 3px 7px;
+        font-size: 9px;
+      }
+
+      .header-status {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--theme);
+      }
+
+      .header-progress {
+        grid-column: 1 / -1;
+        width: min(480px, 100%);
+        justify-self: center;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .header-progress-bar {
+        flex: 1;
+        height: 8px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: var(--card-surface);
+        overflow: hidden;
+      }
+
+      .header-progress-fill {
+        height: 100%;
+        width: var(--header-progress, 0%);
+        border-radius: inherit;
+        background: var(--theme);
+        transition: width 250ms ease;
+      }
+
+      .header-progress.running .header-progress-fill,
+      .header-progress.hitl .header-progress-fill {
+        background-image: linear-gradient(90deg, var(--theme), #93c5fd, var(--theme));
+        background-size: 180% 100%;
+        animation: progress-shift 1.1s linear infinite;
+      }
+
+      .header-progress-label {
+        min-width: 38px;
+        font-size: 11px;
+        color: var(--text-secondary);
+        text-align: right;
+      }
+
+      @keyframes progress-shift {
+        from { background-position: 0% 50%; }
+        to { background-position: 100% 50%; }
+      }
+
+      .header-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 999px;
+        background: var(--theme);
+      }
+
+      .header-dot.pulse {
+        animation: pulse-dot 0.8s infinite;
+      }
+
+      .grid-2 {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .steps-card,
+      .log-card {
+        padding: 12px;
+      }
+
+      .small-title {
+        font-size: 11px;
+        color: var(--text-muted);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .steps {
+        margin-top: 10px;
+        display: grid;
+        gap: 8px;
+      }
+
+      .step-item {
+        display: grid;
+        grid-template-columns: 24px 1fr auto;
+        gap: 8px;
+        align-items: start;
+        opacity: 0;
+        animation: fade-in-up 250ms ease forwards;
+        animation-delay: var(--d);
+      }
+
+      .step-pending {
+        opacity: 0.4;
+      }
+
+      .step-rail {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .step-circle {
+        width: 20px;
+        height: 20px;
+        border-radius: 999px;
+        border: 1px solid var(--border-strong);
+        background: var(--card-surface);
+        color: var(--text-secondary);
+        display: grid;
+        place-items: center;
+        font-size: 10px;
+        font-weight: 600;
+      }
+
+      .step-circle.done {
+        background: var(--theme-light);
+        border-color: var(--theme-border);
+        color: var(--theme);
+      }
+
+      .step-circle.hitl {
+        background: var(--amber-light);
+        border-color: var(--amber-border);
+        color: var(--amber);
+      }
+
+      .step-line {
+        width: 1.5px;
+        height: 22px;
+        background: var(--border);
+        margin-top: 4px;
+      }
+
+      .step-title {
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .step-title.hitl {
+        color: var(--amber);
+      }
+
+      .step-sub {
+        margin-top: 3px;
+        font-size: 11px;
+        color: var(--text-secondary);
+      }
+
+      .metric-chip {
+        margin-top: 2px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: var(--card-surface);
+        padding: 3px 7px;
+        font-size: 10px;
+        color: var(--text-secondary);
+        white-space: nowrap;
+      }
+
+      .metric-chip.hitl {
+        border-color: var(--amber-border);
+        background: var(--amber-light);
+        color: var(--amber);
+        animation: hitl-badge-pulse 1s infinite;
+      }
+
+      .hitl-inline {
+        margin-top: 4px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border: 1px solid var(--amber-border);
+        background: var(--amber-light);
+        color: var(--amber);
+        border-radius: 999px;
+        padding: 3px 7px;
+        font-size: 10px;
+      }
+
+      .metrics-grid {
+        margin-top: 10px;
+        display: grid;
+        gap: 8px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .m-chip {
+        border: 1px solid var(--border);
+        background: var(--card-surface);
+        border-radius: var(--radius-sm);
+        text-align: center;
+        padding: 8px 5px;
+      }
+
+      .m-value {
+        font-size: 18px;
+        line-height: 1.1;
+        font-weight: 700;
+        color: var(--theme);
+      }
+
+      .m-label {
+        margin-top: 2px;
+        font-size: 9px;
+        color: var(--text-muted);
+      }
+
+      .inline-overlay {
+        margin-top: 12px;
+        border-radius: var(--radius-card);
+        background: rgba(15, 23, 42, 0.5);
+        padding: 12px;
+      }
+
+      .modal-box {
+        max-width: 480px;
+        margin: 0 auto;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-card);
+        background: var(--card-bg);
+        padding: 20px;
+        opacity: 0;
+        transform: scale(0.96);
+        animation: modal-in 180ms ease forwards;
+      }
+
+      .modal-head {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+      }
+
+      .modal-ico {
+        width: 32px;
+        height: 32px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--amber-border);
+        background: var(--amber-light);
+        display: grid;
+        place-items: center;
+      }
+
+      .modal-title {
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .modal-sub {
+        margin-top: 4px;
+        font-size: 11px;
+        color: var(--text-secondary);
+      }
+
+      .anom-row {
+        display: flex;
+        gap: 8px;
+        padding: 8px 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .anom-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        margin-top: 5px;
+      }
+
+      .anom-item {
+        font-size: 11px;
+        font-weight: 500;
+      }
+
+      .anom-detail {
+        margin-top: 2px;
+        font-size: 10px;
+        color: var(--text-secondary);
+      }
+
+      .modal-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .log-body {
+        margin-top: 10px;
+        border-radius: 10px;
+        background: var(--terminal-bg);
+        padding: 10px 12px;
+      }
+
+      .log-head {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: var(--terminal-head);
+        font-size: 10px;
+        margin-bottom: 8px;
+      }
+
+      .tl-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+      }
+
+      .tl-red { background: var(--red); }
+      .tl-amber { background: var(--amber); }
+      .tl-green { background: var(--green); }
+
+      .ll {
+        display: flex;
+        gap: 8px;
+        font-size: 10.5px;
+        line-height: 1.8;
+        animation: slide-in 150ms ease both;
+        animation-delay: var(--d);
+      }
+
+      .ll.hitl {
+        background: var(--terminal-hitl-bg);
+        border-radius: 6px;
+        padding: 0 6px;
+      }
+
+      .ll-time {
+        color: var(--terminal-time);
+      }
+
+      .ll-agent {
+        color: var(--theme);
+      }
+
+      .ll-msg {
+        color: var(--terminal-msg);
+      }
+
+      .ll.hitl .ll-msg {
+        color: var(--terminal-hitl);
+      }
+
+      .banner-stack {
+        margin-top: 10px;
+        display: grid;
+        gap: 8px;
+      }
+
+      .banner {
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--banner-border);
+        background: var(--banner-bg);
+        padding: 8px 9px;
+        display: flex;
+        gap: 8px;
+        align-items: flex-start;
+      }
+
+      .b-ico {
+        width: 18px;
+        height: 18px;
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        color: var(--card-bg);
+        font-size: 10px;
+        font-weight: 700;
+        background: var(--banner-ico);
+      }
+
+      .b-label {
+        font-size: 9px;
+        color: var(--text-secondary);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .b-body {
+        font-size: 11px;
+        color: var(--text-secondary);
+        margin-top: 2px;
+      }
+
+      .banner.green { --banner-bg: var(--green-light); --banner-border: var(--green-border); --banner-ico: var(--green); }
+      .banner.amber { --banner-bg: var(--amber-light); --banner-border: var(--amber-border); --banner-ico: var(--amber); }
+      .banner.blue { --banner-bg: var(--blue-light); --banner-border: var(--blue-border); --banner-ico: var(--blue); }
+
+      .action-bar {
+        padding: 12px 16px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .action-label {
+        color: var(--text-muted);
+        font-size: 11px;
+        font-weight: 500;
+        margin-right: 4px;
+      }
+
+      .btn {
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border);
+        background: var(--card-bg);
+        color: var(--text-secondary);
+        font-size: 12px;
+        font-weight: 500;
+        padding: 8px 16px;
+        cursor: pointer;
+        transition: opacity 150ms ease, transform 80ms ease;
+      }
+
+      .btn:hover {
+        opacity: 0.85;
+      }
+
+      .btn:active {
+        transform: scale(0.98);
+      }
+
+      .btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+
+      .btn-amber {
+        color: var(--amber);
+        border-color: var(--amber-border);
+        background: var(--amber-light);
+      }
+
+      .btn-blue {
+        color: var(--blue);
+        border-color: var(--blue-border);
+        background: var(--blue-light);
+      }
+
+      .btn-ghost {
+        color: var(--text-secondary);
+        border-color: var(--border);
+        background: var(--card-bg);
+      }
+
+      .btn-next {
+        color: var(--card-bg);
+        border-color: var(--blue);
+        background: var(--blue);
+      }
+
+      .btn-next.complete {
+        border-color: var(--green);
+        background: var(--green);
+      }
+
+      .inline-note {
+        margin-top: 8px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--green-border);
+        background: var(--green-light);
+        color: var(--green);
+        padding: 7px 9px;
+        font-size: 11px;
+      }
+
+      .inline-error {
+        margin-top: 8px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--red-border);
+        background: var(--red-light);
+        color: var(--red);
+        padding: 7px 9px;
+        font-size: 11px;
+      }
+
+      .output-panel {
+        margin-top: 8px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        background: var(--card-surface);
+        padding: 10px;
+        white-space: pre-wrap;
+        font-size: 10px;
+        color: var(--text-secondary);
+      }
+
+      .so-list {
+        margin-top: 10px;
+        display: grid;
+        gap: 8px;
+      }
+
+      .so-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        background: #fff;
+        padding: 8px 10px;
+      }
+
+      .so-id {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .so-meta {
+        margin-top: 2px;
+        font-size: 10px;
+        color: var(--text-secondary);
+      }
+
+      .so-modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.45);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 50;
+        padding: 16px;
+      }
+
+      .so-modal-overlay.open {
+        display: flex;
+      }
+
+      .so-modal-card {
+        width: min(760px, 100%);
+        border-radius: var(--radius-card);
+        border: 1px solid var(--border);
+        background: #fff;
+        box-shadow: 0 16px 40px rgba(15, 23, 42, 0.18);
+        overflow: hidden;
+        animation: modal-in 180ms ease forwards;
+      }
+
+      .so-modal-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--border);
+        background: var(--card-surface);
+        padding: 12px 14px;
+      }
+
+      .so-modal-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+
+      .so-modal-body {
+        padding: 14px;
+        display: grid;
+        gap: 10px;
+      }
+
+      .so-doc-header {
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 10px;
+        background: var(--blue-light);
+      }
+
+      .so-doc-grid {
+        display: grid;
+        gap: 8px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .so-doc-cell {
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 8px;
+        background: #fff;
+      }
+
+      .so-doc-label {
+        font-size: 9px;
+        color: var(--text-muted);
+      }
+
+      .so-doc-value {
+        margin-top: 3px;
+        font-size: 11px;
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      .theme-teal { --theme: var(--teal); --theme-light: var(--teal-light); --theme-border: var(--teal-border); }
+      .theme-purple { --theme: var(--purple); --theme-light: var(--purple-light); --theme-border: var(--purple-border); }
+      .theme-amber { --theme: var(--amber); --theme-light: var(--amber-light); --theme-border: var(--amber-border); }
+      .theme-blue { --theme: var(--blue); --theme-light: var(--blue-light); --theme-border: var(--blue-border); }
+      .theme-green { --theme: var(--green); --theme-light: var(--green-light); --theme-border: var(--green-border); }
+      .theme-violet { --theme: var(--violet); --theme-light: var(--violet-light); --theme-border: var(--violet-border); }
+
+      *:focus-visible {
+        outline: 2px solid var(--blue);
+        outline-offset: 2px;
+      }
+
+      @keyframes pulse-dot {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
+      }
+
+      @keyframes panel-in {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes fade-in-up {
+        from { opacity: 0; transform: translateY(6px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes slide-in {
+        from { opacity: 0; transform: translateX(-4px); }
+        to { opacity: 1; transform: translateX(0); }
+      }
+
+      @keyframes hitl-badge-pulse {
+        0%, 100% { border-color: var(--amber-border); }
+        50% { border-color: transparent; }
+      }
+
+      @keyframes kpi-enter {
+        from { opacity: 0; transform: scale(0.97); }
+        to { opacity: 1; transform: scale(1); }
+      }
+
+      @keyframes modal-in {
+        from { opacity: 0; transform: scale(0.96); }
+        to { opacity: 1; transform: scale(1); }
+      }
+
+      @media (max-width: 768px) {
+        .app-shell { grid-template-columns: 1fr; }
+      }
+
+      @media (max-width: 640px) {
+        .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+
+      @media (max-width: 480px) {
+        .hero { padding: 32px 20px; }
+        .kpi-grid { grid-template-columns: 1fr; }
+      }
+
+      /* Sequential step loading indicator */
+      @keyframes typing-dot {
+        0%, 100% { opacity: 0.2; }
+        20% { opacity: 1; }
+      }
+      .typing-indicator {
+        display: inline-flex;
+        gap: 3px;
+        align-items: center;
+        padding: 2px 0;
+      }
+      .typing-indicator span {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--theme, var(--blue));
+        animation: typing-dot 1.4s infinite both;
+      }
+      .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+      .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+      /* Bottom action panel transitions */
+      .bottom-panel-content {
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
+        transition: max-height 350ms ease, opacity 250ms ease, margin 250ms ease;
+        margin-top: 0;
+      }
+      .bottom-panel-content.open {
+        max-height: 500px;
+        opacity: 1;
+        margin-top: 8px;
+      }
+
+      /* Active action button highlight */
+      .btn.btn-active {
+        box-shadow: 0 0 0 2px var(--blue);
+        transform: scale(1.02);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="app-wrap">
+      <section class="hero" id="hero" aria-label="Hero section">
+        <div class="hero-content">
+          <div class="live-badge mono">
+            <span class="live-dot" aria-hidden="true"></span>
+            <span>LIVE SYSTEM · NAQUA AGENTOS v4.0</span>
+          </div>
+          <h1>Sales Order Automation <span>using Agentic AI</span></h1>
+          <p>
+            An autonomous 6-agent pipeline that converts inbound Purchase Orders into ERP-posted Sales
+            Orders — complete with export documentation — in under 4 minutes.
+          </p>
+          <div class="kpi-grid">
+            <article class="kpi-card">
+              <div class="kpi-value">4 min</div>
+              <div class="kpi-label">End-to-end cycle</div>
+              <div class="kpi-delta mono">↓ from 2–5 days</div>
+            </article>
+            <article class="kpi-card">
+              <div class="kpi-value">97.4%</div>
+              <div class="kpi-label">Processing accuracy</div>
+              <div class="kpi-delta mono">↑ from ~82% manual</div>
+            </article>
+            <article class="kpi-card">
+              <div class="kpi-value">60–80%</div>
+              <div class="kpi-label">Cost reduction</div>
+              <div class="kpi-delta mono">$30–150 → $5–15/SO</div>
+            </article>
+            <article class="kpi-card">
+              <div class="kpi-value">Zero</div>
+              <div class="kpi-label">Manual re-entry</div>
+              <div class="kpi-delta mono">was 3–4 per PO</div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="features-strip" id="features" aria-label="Features strip">
+        <div class="feature-list">
+          <div class="chip blue"><span class="chip-dot"></span>24/7 Inbox monitoring</div>
+          <div class="chip purple"><span class="chip-dot"></span>OCR + NLP extraction</div>
+          <div class="chip amber"><span class="chip-dot"></span>Human-in-the-loop (HITL)</div>
+          <div class="chip green"><span class="chip-dot"></span>ERP auto-posting</div>
+          <div class="chip teal"><span class="chip-dot"></span>Export doc generation</div>
+          <div class="chip blue"><span class="chip-dot"></span>Immutable audit log</div>
+          <div class="chip purple"><span class="chip-dot"></span>Real-time alerts</div>
+          <div class="chip green"><span class="chip-dot"></span>ISO-ready compliance</div>
+        </div>
+      </section>
+
+      <section id="simulation" aria-label="Main simulation app container">
+        <div class="app-shell">
+          <aside class="left-nav">
+            <div class="panel-label mono">Pipeline agents</div>
+            <div class="agent-nav" id="agentNav"></div>
+            <div class="status-block">
+              <div class="status-row"><span>Orders</span><span id="statusOrders">3 live</span></div>
+              <div class="status-row"><span>Active agent</span><span id="statusAgent">03 · Item Mapper</span></div>
+              <div class="status-row"><span>Elapsed timer</span><span id="statusTimer">00:00</span></div>
+              <div class="status-row"><span>Pipeline state</span><span id="statusPipeline">Awaiting approval</span></div>
+            </div>
+          </aside>
+          <section class="right-panel">
+            <div id="panelHost"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+    <div class="so-modal-overlay" id="soModalOverlay" onclick="closeSalesOrderModal(event)">
+      <div class="so-modal-card" id="soModalCard">
+        <div class="so-modal-head">
+          <div class="so-modal-title">Sales Order Preview</div>
+          <button class="btn btn-ghost" onclick="closeSalesOrderModal()">Close</button>
+        </div>
+        <div class="so-modal-body" id="soModalBody"></div>
+      </div>
+    </div>
+
+    <script>
+      const appState = {
+        currentAgent: 0,
+        agentStates: ["done", "done", "hitl", "running", "done", "running"],
+        agentProgress: [],
+        completedSteps: [],
+        elapsedTime: 0,
+        isRunning: false,
+        stepState: {},
+        logState: {},
+      };
+
+      appState.currentAgent = 2;
+      appState.startedAt = null;
+      appState.timerRef = null;
+      appState.hitlApproved = false;
+      appState.hitlRejected = false;
+      appState.activeBottomPanel = null;  // 'approval' | 'output' | 'validate' | null
+      appState.simTimeout = null;
+
+      const agents = [
+        {
+          id: 1, key: "email", theme: "teal", icon: "📧", dot: "var(--teal)", name: "Email Watcher",
+          desc: "Monitors inbound channels and queues PO payloads for extraction.",
+          tools: ["MS Graph API", "IMAP listener", "NLP Classifier", "Azure Logic Apps"],
+          stateText: { done: "Completed", running: "Running", hitl: "Awaiting review", error: "Error", idle: "Idle" },
+          steps: [
+            ["Connect MS Graph API", "Auth OK. Token valid.", "0.2s · PASS"],
+            ["Scan inbox — 47 emails", "1 PO from coral@coralintl.com", "18 sec avg"],
+            ["NLP email classification", "PURCHASE ORDER · 99.2% confidence", "5 sec · 99.2%"],
+            ["Download PDF attachment", "COR-BATCH-46.pdf · 6.3 MB · 3 pages", "1.1 sec · 6.3 MB"],
+            ["Queue for Doc Intelligence", "Payload queued. Auto-ack sent to buyer.", "Instant"],
+          ],
+          metrics: [["47", "emails scanned"], ["3", "POs found"], ["18s", "detect time"]],
+          logs: [
+            "Connected to mailbox endpoint.",
+            "Inbound PO candidate detected.",
+            "Classification score: 99.2%.",
+            "Attachment saved to processing queue.",
+          ],
+          banners: [
+            { type: "green", label: "Notification", body: "Buyer notified: PO received. Ref COR-BATCH-46. Processing in progress." },
+            { type: "blue", label: "Analytics", body: "47 scanned · 3 POs · 0 misclassified · avg 18 sec" },
+          ],
+          output: "email_metadata:\n- sender: coral@coralintl.com\n- subject: PO COR-BATCH-46\n- attachment: /inbox/COR-BATCH-46.pdf",
+        },
+        {
+          id: 2, key: "doc", theme: "purple", icon: "🔍", dot: "var(--purple)", name: "Doc Intelligence",
+          desc: "Runs OCR + NLP extraction and outputs structured purchase order fields.",
+          tools: ["Azure Form Recognizer", "LayoutLM", "spaCy NER", "pytesseract"],
+          stateText: { done: "Completed", running: "Running", hitl: "Awaiting review", error: "Error", idle: "Idle" },
+          steps: [
+            ["Initialize LayoutLM model", "Azure Form Recognizer v3.0 loaded.", "0.4s · ready"],
+            ["Run OCR on 3 pages", "Text extracted. 300 DPI. Clean scan.", "2.1s · 300 DPI"],
+            ["NLP field extraction", "24 fields: buyer, 12 items, LC ref, FOB", "4.9s · 24 fields"],
+            ["Confidence scoring", "Overall 99.4% · lowest 97.1% · PASS", "99.4% avg"],
+            ["Write structured JSON", "USD 100,224 confirmed → Item Mapper", "7.4s · 0 errors"],
+          ],
+          metrics: [["24", "fields extracted"], ["99.4%", "confidence"], ["7.4s", "parse time"]],
+          logs: [
+            "Model initialization complete.",
+            "OCR extracted 3-page payload.",
+            "Entity extraction yielded 24 fields.",
+            "Payload serialized and sent downstream.",
+          ],
+          banners: [
+            { type: "blue", label: "Analytics", body: "24/24 fields · 99.4% conf · 7.4s · 0 errors · zero re-keying" },
+          ],
+          output: "extracted_fields:\n- buyer: Coral International\n- po_number: COR-BATCH-46\n- line_items: 12\n- amount_usd: 100224",
+        },
+        {
+          id: 3, key: "mapper", theme: "amber", icon: "🗺️", dot: "var(--amber)", name: "Item Mapper",
+          desc: "Matches extracted item descriptions against ERP item master with confidence checks.",
+          tools: ["RapidFuzz", "ERP Item Master", "Confidence Scorer"],
+          stateText: { done: "Approved — continuing", running: "Running", hitl: "Awaiting approval", error: "Error", idle: "Idle" },
+          steps: [
+            ["Load ERP item master", "4,821 records from SAP S/4HANA", "0.3s · 4821 records"],
+            ["RapidFuzz matching 12 items", "11 items above 95% · avg conf 97.1%", "11/12 auto-mapped"],
+            ["FLAGGED — HITL", "Entry #04: COR-FILTER-XLR8 · 88% conf", "Awaiting human review"],
+            ["Confidence complete", "Awaiting approval", "Pending"],
+            ["Write JSON payload", "→ Validation Agent queue", "Pending"],
+          ],
+          metrics: [["12", "items"], ["1", "HITL flag"], ["91%", "avg confidence"]],
+          logs: [
+            "Item master loaded: 4821 records.",
+            "11 line items resolved automatically.",
+            "Confidence exception raised for item #04.",
+            "HITL checkpoint waiting for operator.",
+          ],
+          banners: [
+            { type: "amber", label: "Alert", body: "Operator notified · 30 min SLA · escalates to team lead at 29 min" },
+            { type: "blue", label: "Analytics", body: "83% auto-mapped · 17% HITL · avg review 4.2 min" },
+          ],
+          output: "item_mapping:\n- auto_mapped: 11\n- flagged: 1\n- flagged_item: COR-FILTER-XLR8 (88%)\n- suggested_code: NAQUA-FILTER-XLR-8B",
+        },
+        {
+          id: 4, key: "validator", theme: "blue", icon: "🛡️", dot: "var(--blue)", name: "Validator",
+          desc: "Applies business constraints, pricing checks, and credit policies before SO posting.",
+          tools: ["Business Rules Engine", "ERP Credit API", "Pricing DB"],
+          stateText: { done: "Completed", running: "Running", hitl: "Awaiting review", error: "Error", idle: "Idle" },
+          steps: [
+            ["Load 37 validation rules", "Business rules engine initialized.", "0.1s · 37 rules"],
+            ["Mandatory field check", "All 24 fields present · PASS", "24/24 PASS"],
+            ["Pricing reconciliation", "USD 100,224 vs pricelist · delta <0.5%", "MATCH"],
+            ["Credit limit check", "Exposure USD 200,448 of USD 5M · 4%", "Limit OK"],
+            ["Validation report written", "37 rules passed. 0 exceptions. → SO Agent", "9.2s · 0 exceptions"],
+          ],
+          metrics: [["37", "rules checked"], ["100%", "auto-passed"], ["0", "exceptions"]],
+          logs: [
+            "Validation rules loaded.",
+            "Required fields passed.",
+            "Pricing and credit checks passed.",
+            "Validation report committed.",
+          ],
+          banners: [
+            { type: "green", label: "Notification", body: "All 37 checks passed. 0 exceptions. PO cleared for SO creation." },
+          ],
+          output: "validation_report:\n- rules_checked: 37\n- pass_rate: 100%\n- pricing_delta: <0.5%\n- exceptions: 0",
+        },
+        {
+          id: 5, key: "so", theme: "green", icon: "📋", dot: "var(--green)", name: "SO Agent",
+          desc: "Creates ERP sales orders and routes manager checkpoint for commercial sign-off.",
+          tools: ["ERP REST API", "UiPath Orchestrator", "SO Template"],
+          stateText: { done: "Completed", running: "Running", hitl: "Awaiting review", error: "Error", idle: "Idle" },
+          steps: [
+            ["Build ERP REST payload", "Validated JSON → SAP S/4HANA schema", "0.5s · 3 SOs"],
+            ["Authenticate to SAP S/4HANA", "OAuth2 token acquired. Connection OK.", "0.3s · Auth OK"],
+            ["POST 3 Sales Orders", "COR46→SO-45912 ✓ COR47→SO-45913 ✓ COR48→SO-45914 ✓", "11s"],
+            ["HITL — Manager approval", "Dashboard notif sent · SLA 2 hrs", "Awaiting human review"],
+            ["Approval received · confirmed", "Approved in 38 min. SOs active.", "38 min · SLA met"],
+          ],
+          metrics: [["3", "SOs posted"], ["11s", "ERP response"], ["99.1%", "API success"]],
+          logs: [
+            "Payload transformed for SAP API.",
+            "ERP authentication successful.",
+            "SO-45912/13/14 posted.",
+            "Manager sign-off complete.",
+          ],
+          banners: [
+            { type: "green", label: "Notification", body: "SO-45912, SO-45913, SO-45914 posted to SAP. Sales team notified." },
+          ],
+          output: "sales_orders:\n- SO-45912\n- SO-45913\n- SO-45914\namount_usd: 300672",
+        },
+        {
+          id: 6, key: "compliance", theme: "violet", icon: "📑", dot: "var(--violet)", name: "Compliance",
+          desc: "Generates export documentation, controls finance sign-off, and writes immutable audit logs.",
+          tools: ["DocGen Engine", "SWIFT Router", "Audit Logger", "DHL API"],
+          stateText: { done: "Completed", running: "Running", hitl: "Awaiting review", error: "Error", idle: "Idle" },
+          steps: [
+            ["Load 3 SOs from Agent 05", "SO-45912/13/14 · USD 300,672 total", "0.2s · 3 SOs"],
+            ["Generate 3 BL drafts", "CGMU6956470, CGMU6983671, AMCU9371181", "3 BLs · 18s"],
+            ["Generate LC, packing, CO docs", "18 documents total · LC pre-check PASS", "42s · 18 docs"],
+            ["HITL — Finance sign-off", "Doc set sent for review · 15 min SLA", "Awaiting human review"],
+            ["Dispatch + audit log", "Sent to ANB Bank + customer. DHL triggered. ISO log written.", "3m 51s total"],
+          ],
+          metrics: [["18", "docs generated"], ["94%", "1st-attempt bank"], ["3m51s", "total cycle"]],
+          logs: [
+            "Document generation batch started.",
+            "Export bundle contains 18 documents.",
+            "Finance sign-off checkpoint initiated.",
+            "Dispatch and audit ledger write queued.",
+          ],
+          banners: [
+            { type: "amber", label: "Alert", body: "LC expiry 45+ days · No action · 7-day pre-expiry check scheduled" },
+            { type: "blue", label: "Analytics", body: "Cycle 3m51s · 18 docs · 94% bank · 60–80% cost reduction · 97.4% accuracy" },
+          ],
+          output: "compliance_bundle:\n- docs: 18\n- bank_submission: ready\n- dhl_dispatch: queued\n- audit_log: immutable_entry_written",
+        },
+      ];
+
+      const agentNav = document.getElementById("agentNav");
+      const panelHost = document.getElementById("panelHost");
+      const soModalOverlay = document.getElementById("soModalOverlay");
+      const soModalBody = document.getElementById("soModalBody");
+
+      const soDocuments = {
+        "SO-45912": {
+          customer: "Coral International",
+          amount: "USD 100,224",
+          currency: "USD",
+          paymentTerms: "LC 45 days",
+          incoterm: "FOB Karachi",
+          items: "4 line items",
+          createdBy: "SO Agent",
+          approvedBy: "Sales Manager",
+          status: "Posted to SAP S/4HANA"
+        },
+        "SO-45913": {
+          customer: "Coral International",
+          amount: "USD 99,912",
+          currency: "USD",
+          paymentTerms: "LC 45 days",
+          incoterm: "FOB Karachi",
+          items: "4 line items",
+          createdBy: "SO Agent",
+          approvedBy: "Sales Manager",
+          status: "Posted to SAP S/4HANA"
+        },
+        "SO-45914": {
+          customer: "Coral International",
+          amount: "USD 100,536",
+          currency: "USD",
+          paymentTerms: "LC 45 days",
+          incoterm: "FOB Karachi",
+          items: "4 line items",
+          createdBy: "SO Agent",
+          approvedBy: "Sales Manager",
+          status: "Posted to SAP S/4HANA"
+        }
+      };
+
+      function fmtState(s) {
+        return s.toUpperCase();
+      }
+
+      function formatTime(sec) {
+        const m = String(Math.floor(sec / 60)).padStart(2, "0");
+        const s = String(sec % 60).padStart(2, "0");
+        return `${m}:${s}`;
+      }
+
+      function getInitialProgress(agentIndex) {
+        const totalSteps = agents[agentIndex].steps.length;
+        const completed = appState.completedSteps[agentIndex] ?? 0;
+        if (totalSteps <= 0) return 0;
+        if (agentIndex === 2 && !appState.hitlApproved) {
+          return Math.min((completed / totalSteps) * 100, (3 / totalSteps) * 100);
+        }
+        return (completed / totalSteps) * 100;
+      }
+
+      function syncAgentProgress(agentIndex) {
+        updateAgentProgress(agentIndex, getInitialProgress(agentIndex));
+      }
+
+      function syncAllProgress() {
+        agents.forEach((_, i) => syncAgentProgress(i));
+      }
+
+      function initializeProgressState() {
+        if (!appState.completedSteps.length) {
+          appState.completedSteps = agents.map(() => 0);
+        }
+        if (!appState.agentProgress.length) {
+          appState.agentProgress = agents.map(() => 0);
+        }
+        syncAllProgress();
+      }
+
+      function markAgentComplete(agentIndex) {
+        appState.completedSteps[agentIndex] = agents[agentIndex].steps.length;
+        syncAgentProgress(agentIndex);
+      }
+
+      function markStepComplete(agentIndex, completedCount) {
+        const total = agents[agentIndex].steps.length;
+        const clamped = Math.max(0, Math.min(completedCount, total));
+        appState.completedSteps[agentIndex] = clamped;
+        syncAgentProgress(agentIndex);
+      }
+
+      function finalizeAgentProgress(agentIndex) {
+        if (agentIndex === 2 && !appState.hitlApproved) {
+          markStepComplete(agentIndex, 3);
+          return;
+        }
+        markAgentComplete(agentIndex);
+      }
+
+      function getSimulationStepCount(agentIndex) {
+        if (agentIndex === 2 && !appState.hitlApproved) return 3;
+        return agents[agentIndex].steps.length;
+      }
+
+      function resolveAgentState(agentIndex) {
+        if (agentIndex === 2 && !appState.hitlApproved) return "hitl";
+        const total = agents[agentIndex].steps.length;
+        const completed = appState.completedSteps[agentIndex] ?? 0;
+        if (completed >= total) return "done";
+        if (completed > 0) return "running";
+        return "idle";
+      }
+
+      function refreshAgentStates() {
+        appState.agentStates = agents.map((_, i) => resolveAgentState(i));
+      }
+
+      function beginAgentSimulation(agentIndex) {
+        appState.currentAgent = agentIndex;
+        appState.activeBottomPanel = null;
+        appState.hitlRejected = false;
+        if (!appState.isRunning) startTimer();
+        refreshAgentStates();
+        appState.agentStates[agentIndex] = agentIndex === 2 && !appState.hitlApproved ? "hitl" : "running";
+        renderNav();
+        renderPanel();
+        updateStatusBlock();
+        const activeRow = agentNav.querySelector(`[data-idx="${agentIndex}"]`);
+        if (activeRow) {
+          activeRow.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+      }
+
+      function rerunCurrentAgent() {
+        beginAgentSimulation(appState.currentAgent);
+      }
+
+      function updateAgentProgress(agentIndex, progress) {
+        const clamped = Math.max(0, Math.min(100, progress));
+        appState.agentProgress[agentIndex] = clamped;
+        if (agentIndex !== appState.currentAgent) return;
+        const header = panelHost.querySelector(".header-progress");
+        if (!header) return;
+        header.style.setProperty("--header-progress", `${clamped}%`);
+        const label = header.querySelector(".header-progress-label");
+        if (label) label.textContent = `${Math.round(clamped)}%`;
+      }
+
+      function currentPipelineLabel() {
+        const idx = appState.currentAgent;
+        if (idx === 2 && !appState.hitlApproved) {
+          return "Awaiting approval";
+        }
+        if (idx === 2 && appState.hitlApproved) {
+          return "Approved";
+        }
+        const state = appState.agentStates[idx];
+        if (state === "running") return "In progress";
+        if (state === "done") return "Stable";
+        if (state === "hitl") return "Awaiting review";
+        if (state === "error") return "Attention required";
+        return "Idle";
+      }
+
+      function startTimer() {
+        if (appState.isRunning) return;
+        appState.isRunning = true;
+        appState.startedAt = Date.now();
+        appState.timerRef = setInterval(() => {
+          appState.elapsedTime = Math.floor((Date.now() - appState.startedAt) / 1000);
+          document.getElementById("statusTimer").textContent = formatTime(appState.elapsedTime);
+        }, 1000);
+      }
+
+      function selectAgent(idx) {
+        if (idx < 0 || idx >= agents.length) return;
+        beginAgentSimulation(idx);
+      }
+
+      function updateStatusBlock() {
+        const a = agents[appState.currentAgent];
+        document.getElementById("statusAgent").textContent = `${String(a.id).padStart(2, "0")} · ${a.name}`;
+        document.getElementById("statusPipeline").textContent = currentPipelineLabel();
+      }
+
+      function syncCurrentHeaderState() {
+        const idx = appState.currentAgent;
+        const a = agents[idx];
+        const state = appState.agentStates[idx];
+        const headerStateText = idx === 2 && appState.hitlApproved ? "Approved — continuing" : a.stateText[state];
+        const headerDotPulse = state === "running" || state === "hitl";
+        const currentProgress = appState.agentProgress[idx] ?? getInitialProgress(idx);
+
+        const dot = panelHost.querySelector(".header-dot");
+        const statusText = panelHost.querySelector(".header-status span:last-child");
+        const progressWrap = panelHost.querySelector(".header-progress");
+        if (dot) dot.className = `header-dot ${headerDotPulse ? "pulse" : ""}`;
+        if (statusText) statusText.textContent = headerStateText;
+        if (progressWrap) {
+          progressWrap.className = `header-progress ${state}`;
+          progressWrap.style.setProperty("--header-progress", `${currentProgress}%`);
+        }
+      }
+
+      function renderNav() {
+        if (!agentNav.children.length) {
+          initializeProgressState();
+          agentNav.innerHTML = agents
+            .map((a, i) => {
+              const state = appState.agentStates[i];
+              const active = i === appState.currentAgent ? "active" : "";
+              return `
+                <div
+                  class="agent-row ${state} ${active}"
+                  role="button"
+                  tabindex="0"
+                  aria-label="Agent ${String(a.id).padStart(2, "0")} ${a.name} — ${state}"
+                  data-idx="${i}"
+                  style="--agent-color:${a.dot}"
+                >
+                  <span class="agent-dot" aria-hidden="true"></span>
+                  <span class="agent-num mono">${String(a.id).padStart(2, "0")}</span>
+                  <span class="agent-name">${a.name}</span>
+                  <span class="state-badge mono ${state}">${fmtState(state)}</span>
+                </div>
+              `;
+            })
+            .join("");
+
+          agentNav.querySelectorAll(".agent-row").forEach((row) => {
+            row.addEventListener("click", () => selectAgent(Number(row.dataset.idx)));
+            row.addEventListener("keydown", (ev) => {
+              if (ev.key === "Enter" || ev.key === " ") {
+                ev.preventDefault();
+                selectAgent(Number(row.dataset.idx));
+              }
+            });
+          });
+        } else {
+          const rows = agentNav.querySelectorAll(".agent-row");
+          rows.forEach((row, i) => {
+            const state = appState.agentStates[i];
+            const isActive = i === appState.currentAgent;
+            row.className = `agent-row ${state} ${isActive ? "active" : ""}`;
+            const badge = row.querySelector(".state-badge");
+            badge.className = `state-badge mono ${state}`;
+            badge.textContent = fmtState(state);
+          });
+        }
+      }
+
+      function stepClass(agentIndex, stepIndex) {
+        const state = appState.agentStates[agentIndex];
+        if (agentIndex === 2 && !appState.hitlApproved) {
+          if (stepIndex < 2) return "done";
+          if (stepIndex === 2) return "hitl";
+          return "pending";
+        }
+        if (state === "done") return "done";
+        if (state === "running") {
+          if (stepIndex < 3) return "done";
+          return "pending";
+        }
+        if (state === "hitl") {
+          if (stepIndex < 2) return "done";
+          if (stepIndex === 2) return "hitl";
+          return "pending";
+        }
+        return "pending";
+      }
+
+      function toggleBottomPanel(panelName) {
+        const btns = document.querySelectorAll('.action-bar .btn');
+        btns.forEach(b => b.classList.remove('btn-active'));
+
+        if (appState.activeBottomPanel === panelName) {
+          appState.activeBottomPanel = null;
+        } else {
+          appState.activeBottomPanel = panelName;
+          const btnClass = panelName === 'approval' ? 'btn-amber' : 
+                           panelName === 'output' ? 'btn-blue' : 'btn-ghost';
+          const targetBtn = document.querySelector(`.action-bar .${btnClass}`);
+          if (targetBtn) targetBtn.classList.add('btn-active');
+        }
+        
+        const panel = document.querySelector('.bottom-panel-content');
+        if (!panel) return;
+
+        if (!appState.activeBottomPanel) {
+          panel.classList.remove('open');
+          return;
+        }
+
+        const idx = appState.currentAgent;
+        const a = agents[idx];
+        
+        let content = '';
+        if (appState.activeBottomPanel === "approval") {
+          content = `<div style="padding:16px;">${renderApprovalContent(idx)}</div>`;
+        } else if (appState.activeBottomPanel === "output") {
+          content = idx === 4
+            ? `<div class="output-panel" style="margin:16px;">${renderSoOutputPanel()}</div>`
+            : `<div class="output-panel mono" style="margin:16px; font-size:11px;">${a.output}</div>`;
+        } else if (appState.activeBottomPanel === "validate") {
+          content = `<div class="inline-note" style="margin:16px;">Re-validation complete. No issues found.</div>`;
+        }
+
+        panel.innerHTML = content;
+        panel.classList.add('open');
+      }
+
+      function renderSoOutputPanel() {
+        const ids = Object.keys(soDocuments);
+        return `
+          <div class="mono" style="font-size:10px; color:var(--text-muted);">Generated Sales Orders</div>
+          <div class="so-list">
+            ${ids
+              .map((id) => `
+                <div class="so-row">
+                  <div>
+                    <div class="so-id">${id}</div>
+                    <div class="so-meta">Coral International · Posted · SAP S/4HANA</div>
+                  </div>
+                  <button class="btn btn-blue" onclick="viewSalesOrder('${id}')">View</button>
+                </div>
+              `)
+              .join("")}
+          </div>
+        `;
+      }
+
+      function viewSalesOrder(orderId) {
+        const doc = soDocuments[orderId];
+        if (!doc || !soModalOverlay || !soModalBody) return;
+        soModalBody.innerHTML = `
+          <div class="so-doc-header">
+            <div class="so-id">${orderId}</div>
+            <div class="so-meta">${doc.customer} · ${doc.status}</div>
+          </div>
+          <div class="so-doc-grid">
+            <div class="so-doc-cell"><div class="so-doc-label">Amount</div><div class="so-doc-value">${doc.amount}</div></div>
+            <div class="so-doc-cell"><div class="so-doc-label">Currency</div><div class="so-doc-value">${doc.currency}</div></div>
+            <div class="so-doc-cell"><div class="so-doc-label">Payment Terms</div><div class="so-doc-value">${doc.paymentTerms}</div></div>
+            <div class="so-doc-cell"><div class="so-doc-label">Incoterm</div><div class="so-doc-value">${doc.incoterm}</div></div>
+            <div class="so-doc-cell"><div class="so-doc-label">Items</div><div class="so-doc-value">${doc.items}</div></div>
+            <div class="so-doc-cell"><div class="so-doc-label">Created By</div><div class="so-doc-value">${doc.createdBy}</div></div>
+            <div class="so-doc-cell"><div class="so-doc-label">Approved By</div><div class="so-doc-value">${doc.approvedBy}</div></div>
+            <div class="so-doc-cell"><div class="so-doc-label">Posting Status</div><div class="so-doc-value">${doc.status}</div></div>
+          </div>
+        `;
+        soModalOverlay.classList.add("open");
+      }
+
+      function closeSalesOrderModal(ev) {
+        if (ev && ev.target && ev.target.id !== "soModalOverlay") return;
+        soModalOverlay.classList.remove("open");
+      }
+
+      function approveHitl(idx) {
+        if (idx !== 2) {
+          toggleBottomPanel(null);
+          return;
+        }
+        appState.hitlApproved = true;
+        appState.hitlRejected = false;
+        appState.activeBottomPanel = null;
+        finalizeAgentProgress(2);
+        refreshAgentStates();
+        renderNav();
+        renderPanel();
+        updateStatusBlock();
+      }
+
+      function rejectHitl(idx) {
+        if (idx !== 2) {
+          toggleBottomPanel(null);
+          return;
+        }
+        appState.activeBottomPanel = null;
+        appState.hitlRejected = true;
+        renderPanel();
+      }
+
+      function nextLabel(idx) {
+        if (idx === 0) return "Next → Doc Intelligence";
+        if (idx === 1) return "Next → Item Mapper";
+        if (idx === 2) return "Next → Validator";
+        if (idx === 3) return "Next → SO Agent";
+        if (idx === 4) return "Next → Compliance";
+        return "Pipeline complete ✓";
+      }
+
+      function nextDisabled(idx) {
+        if (idx === 2 && !appState.hitlApproved) return true;
+        if (idx === 5) return true;
+        return false;
+      }
+
+      function goNext() {
+        const idx = appState.currentAgent;
+        if (idx >= agents.length - 1) return;
+        if (idx === 2 && !appState.hitlApproved) return;
+        selectAgent(idx + 1);
+      }
+
+      function renderApprovalContent(idx) {
+        if (idx === 4) {
+          return `
+            <div class="anom-row"><div class="anom-dot" style="background:var(--amber)"></div><div>
+              <div class="anom-item">Sales Order approval pending — 3 SOs awaiting manager sign-off</div>
+              <div class="anom-detail">SO-45912, SO-45913, SO-45914 · Total USD 300,672 · Coral International</div>
+            </div></div>
+            <div class="modal-actions" style="margin-top:12px;">
+              <button class="btn btn-blue" onclick="toggleBottomPanel(null)">Approve all 3 SOs</button>
+              <button class="btn btn-ghost" onclick="toggleBottomPanel(null)">Hold for review</button>
+            </div>
+          `;
+        }
+        if (idx === 5) {
+          return `
+            <div class="anom-row"><div class="anom-dot" style="background:var(--amber)"></div><div>
+              <div class="anom-item">18 export documents ready for finance sign-off</div>
+              <div class="anom-detail">BL, LC COPY + ORIGINAL, packing lists, CO · LC pre-check: PASS</div>
+              <div class="anom-detail">LC expiry: 45+ days · No discrepancies detected · Ready to dispatch</div>
+            </div></div>
+            <div class="modal-actions" style="margin-top:12px;">
+              <button class="btn btn-blue" onclick="toggleBottomPanel(null)">Sign off and dispatch to bank</button>
+              <button class="btn btn-ghost" onclick="toggleBottomPanel(null)">Hold — request amendment</button>
+            </div>
+          `;
+        }
+        if (idx === 2) {
+          return `
+            <div class="modal-head">
+              <div class="modal-ico">⚠️</div>
+              <div>
+                <div class="modal-title">Manual review required — anomalies detected</div>
+                <div class="modal-sub">1 item below confidence threshold. Review and approve or correct.</div>
+              </div>
+            </div>
+            <div class="anom-row" style="margin-top:10px;">
+              <div class="anom-dot" style="background:var(--amber)"></div>
+              <div>
+                <div class="anom-item">Entry #04 — COR-FILTER-XLR8</div>
+                <div class="anom-detail">AI suggested: NAQUA-FILTER-XLR-8B · Confidence 88% · Below 95% threshold</div>
+              </div>
+            </div>
+            <div class="modal-actions" style="margin-top:16px;">
+              <button class="btn btn-blue" style="background:var(--green-light);border-color:var(--green-border);color:var(--green)" onclick="approveHitl(2)">Approve suggested code</button>
+              <button class="btn btn-ghost" style="background:var(--red-light);border-color:var(--red-border);color:var(--red)" onclick="rejectHitl(2)">Reject — enter correct code</button>
+              <button class="btn btn-ghost" onclick="toggleBottomPanel(null)">Close</button>
+            </div>
+          `;
+        }
+        return `
+          <div class="banner green">
+            <div class="b-ico">N</div>
+            <div>
+              <div class="b-body">All validation checks passed. No manual intervention needed.</div>
+            </div>
+          </div>
+          <div class="modal-actions" style="margin-top:10px;">
+            <button class="btn btn-blue" onclick="toggleBottomPanel(null)">Close</button>
+          </div>
+        `;
+      }
+
+      function startAgentSimulation(idx) {
+        const a = agents[idx];
+        const stepsContainer = document.getElementById("stepsContainer");
+        const logsContainer = document.getElementById("logsContainer");
+        const simulationSteps = getSimulationStepCount(idx);
+        markStepComplete(idx, 0);
+        
+        if (appState.simTimeout) clearTimeout(appState.simTimeout);
+        stepsContainer.innerHTML = "";
+        
+        if (logsContainer) {
+            Array.from(logsContainer.children).forEach(child => {
+                if (!child.classList.contains("log-head")) {
+                    child.remove();
+                }
+            });
+        }
+
+        let currentStep = 0;
+        
+        function renderNextStep() {
+            if (currentStep > simulationSteps) return;
+            
+            if (currentStep > 0) {
+                const prevStepEl = document.getElementById(`step-item-${currentStep - 1}`);
+                if (prevStepEl) {
+                    const sc = stepClass(idx, currentStep - 1);
+                    const hitl = sc === "hitl";
+                    
+                    prevStepEl.classList.remove("step-pending");
+                    const circle = prevStepEl.querySelector(".step-circle");
+                    if (sc === "done") {
+                        circle.classList.add("done");
+                    } else if (hitl) {
+                        circle.classList.add("hitl");
+                    }
+                    
+                    prevStepEl.querySelector(".step-sub").textContent = a.steps[currentStep - 1][1];
+                    const chip = prevStepEl.querySelector(".metric-chip");
+                    if(chip) {
+                        chip.innerHTML = a.steps[currentStep - 1][2];
+                    }
+                    
+                    if (hitl && !prevStepEl.querySelector(".hitl-inline")) {
+                        const hitlEl = document.createElement("div");
+                        hitlEl.className = "hitl-inline mono";
+                        hitlEl.innerHTML = '<span class="live-dot"></span>Awaiting human review';
+                        prevStepEl.querySelector("div:last-child").previousElementSibling.appendChild(hitlEl);
+                    }
+                }
+                markStepComplete(idx, currentStep);
+            }
+
+            if (currentStep < simulationSteps) {
+                const s = a.steps[currentStep];
+                const sc = stepClass(idx, currentStep);
+                const hitl = sc === "hitl";
+                const showLine = currentStep < a.steps.length - 1;
+                
+                const stepEl = document.createElement("div");
+                stepEl.className = "step-item step-pending";
+                stepEl.id = `step-item-${currentStep}`;
+                stepEl.style.animation = "fade-in-up 250ms ease forwards";
+                
+                stepEl.innerHTML = `
+                  <div class="step-rail">
+                    <div class="step-circle">${currentStep + 1}</div>
+                    ${showLine ? '<div class="step-line"></div>' : ""}
+                  </div>
+                  <div>
+                    <div class="step-title ${hitl ? "hitl" : ""}">${s[0]}</div>
+                    <div class="step-sub">Processing...</div>
+                  </div>
+                  <div class="metric-chip mono"><div class="typing-indicator"><span></span><span></span><span></span></div></div>
+                `;
+                stepsContainer.appendChild(stepEl);
+                
+                if (logsContainer && currentStep < a.logs.length) {
+                    const line = a.logs[currentStep];
+                    const logEl = document.createElement("div");
+                    logEl.className = `ll ${line.includes("HITL") || line.includes("checkpoint") ? "hitl" : ""}`;
+                    logEl.style.animation = "slide-in 150ms ease both";
+                    logEl.innerHTML = `
+                        <span class="ll-time mono">[${formatTime(appState.elapsedTime + 8 + currentStep)}]</span>
+                        <span class="ll-agent mono">${a.name}</span>
+                        <span class="ll-msg">${line}</span>
+                    `;
+                    logsContainer.appendChild(logEl);
+                }
+                
+                currentStep++;
+                appState.simTimeout = setTimeout(renderNextStep, 4000);
+            } else {
+                finalizeAgentProgress(idx);
+                refreshAgentStates();
+                renderNav();
+                updateStatusBlock();
+                syncCurrentHeaderState();
+            }
+        }
+        
+        renderNextStep();
+      }
+
+      function renderPanel() {
+        const idx = appState.currentAgent;
+        const a = agents[idx];
+        const state = appState.agentStates[idx];
+        const headerDotPulse = state === "running" || state === "hitl";
+        const headerStateText = idx === 2 && appState.hitlApproved ? "Approved — continuing" : a.stateText[state];
+        const currentProgress = appState.agentProgress[idx] ?? getInitialProgress(idx);
+
+        const bannerHtml = a.banners
+          .map(
+            (b) => `
+              <div class="banner ${b.type}">
+                <div class="b-ico">${b.type === "green" ? "N" : b.type === "amber" ? "!" : "i"}</div>
+                <div>
+                  <div class="b-label mono">${b.label}</div>
+                  <div class="b-body">${b.body}</div>
+                </div>
+              </div>
+            `
+          )
+          .join("");
+
+        panelHost.innerHTML = `
+          <div class="agent-panel theme-${a.theme}">
+            <div class="agent-header card">
+              <div class="header-main">
+                <div class="agent-icon">${a.icon}</div>
+                <div>
+                  <div class="header-title">${a.name} ${state === "hitl" ? '<span class="state-badge hitl mono">HITL</span>' : ""}</div>
+                  <div class="header-sub">${a.desc}</div>
+                  <div class="tool-list">
+                    ${a.tools.map((t) => `<span class="tool-pill mono">${t}</span>`).join("")}
+                  </div>
+                </div>
+              </div>
+              <div class="header-status">
+                <span class="header-dot ${headerDotPulse ? "pulse" : ""}"></span>
+                <span>${headerStateText}</span>
+              </div>
+              <div class="header-progress ${state}" style="--header-progress:${currentProgress}%">
+                <div class="header-progress-bar">
+                  <div class="header-progress-fill"></div>
+                </div>
+                <span class="header-progress-label mono">${Math.round(currentProgress)}%</span>
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="steps-card card">
+                <div class="small-title mono">Processing steps</div>
+                <div class="steps" id="stepsContainer"></div>
+                <div class="metrics-grid">
+                  ${a.metrics
+                    .map(
+                      (m) => `
+                        <div class="m-chip">
+                          <div class="m-value">${m[0]}</div>
+                          <div class="m-label">${m[1]}</div>
+                        </div>
+                      `
+                    )
+                    .join("")}
+                </div>
+                ${idx === 2 && appState.hitlRejected ? '<div class="inline-error">Rejected. Please enter the correct ERP code manually and re-run.</div>' : ""}
+              </div>
+
+              <div class="log-card card">
+                <div class="small-title mono">Terminal log</div>
+                <div class="log-body mono" aria-live="polite" id="logsContainer">
+                  <div class="log-head"><span class="tl-dot tl-red"></span><span class="tl-dot tl-amber"></span><span class="tl-dot tl-green"></span><span>agent_orchestrator --live --v4.0</span></div>
+                </div>
+                <div class="banner-stack">${bannerHtml}</div>
+              </div>
+            </div>
+
+            <div class="action-bar card">
+              <span class="action-label">Actions:</span>
+              <button class="btn btn-amber" onclick="toggleBottomPanel('approval')" title="Opens anomaly review">Manual approval</button>
+              <button class="btn btn-blue" onclick="toggleBottomPanel('output')">View agent output</button>
+              <button class="btn btn-ghost" onclick="toggleBottomPanel('validate')">Validate</button>
+              <button class="btn btn-next ${idx === 5 ? "complete" : ""}" onclick="goNext()" ${nextDisabled(idx) ? "disabled" : ""}>${nextLabel(idx)}</button>
+            </div>
+            <div class="bottom-panel-content card"></div>
+          </div>
+        `;
+        
+        startAgentSimulation(idx);
+      }
+
+      renderNav();
+      beginAgentSimulation(0);
+    </script>
+  </body>
+</html>
+
