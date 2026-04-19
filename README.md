@@ -113,31 +113,30 @@ The demo simulates a complete AI-powered order processing workflow that takes ap
 ### File Structure
 
 ```
-client-demo/
-├── simple-demo.html    # Main demo page
-├── styles.css         # Styling and animations
-├── demo.js           # Demo logic and flow control
-└── README.md         # This file
+├── index.html         # Main application page (self-contained UI and scripts)
+├── styles.css         # Stylesheet (legacy; not loaded by index.html)
+├── demo.js            # Standalone demo script (legacy; not loaded by index.html)
+└── README.md          # This file
 ```
 
 ## Installation
 
 1. Clone or download the project files
 2. No server setup required - this is a static demo
-3. Open `simple-demo.html` in a modern web browser
+3. Open `index.html` in a modern web browser
 
 ### Using Live Server (Recommended)
 
 For the best development experience with auto-reload:
 
 1. Install the Live Server VS Code extension
-2. Right-click `simple-demo.html` and select "Open with Live Server"
-3. The demo will open in your default browser
+2. Right-click `index.html` and select "Open with Live Server"
+3. The app will open in your default browser
 
 ## Usage
 
-1. Open the demo page in your browser
-2. Click the "Start Demo" button to begin the simulation
+1. Open `index.html` in your browser
+2. Use the in-page controls to run the sales order automation simulation (agents, validation, and modals as shown in the UI)
 3. Watch as the AI processes a sample purchase order through each stage:
    - Email receipt and analysis
    - Document classification
