@@ -107,8 +107,13 @@
       }
 
       .hero-content {
-        max-width: 980px;
+        max-width: min(1180px, 100%);
         margin: 0 auto;
+        overflow-x: auto;
+        overflow-y: visible;
+        padding-bottom: 2px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
       }
 
       .live-badge {
@@ -134,22 +139,24 @@
 
       .hero h1 {
         margin: 18px 0 12px;
-        font-size: 30px;
+        font-size: clamp(1.15rem, 2.4vw, 30px);
         line-height: 1.2;
         color: var(--card-bg);
+        white-space: nowrap;
       }
 
       .hero h1 span {
-        display: block;
+        display: inline;
         color: #93c5fd;
       }
 
       .hero p {
         margin: 0;
-        max-width: 560px;
+        max-width: none;
         color: var(--hero-text-soft);
-        font-size: 14px;
-        line-height: 1.6;
+        font-size: clamp(0.7rem, 1.35vw, 14px);
+        line-height: 1.5;
+        white-space: nowrap;
       }
 
       .kpi-grid {
@@ -429,6 +436,12 @@
         display: flex;
         gap: 10px;
         align-items: flex-start;
+        min-width: 0;
+      }
+
+      .header-main-body {
+        flex: 1 1 auto;
+        min-width: 0;
       }
 
       .agent-icon {
@@ -458,6 +471,12 @@
         margin-top: 2px;
         font-size: 12px;
         color: var(--text-muted);
+        white-space: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        max-width: 100%;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
       }
 
       .tool-list {
@@ -968,13 +987,188 @@
 
       .output-panel {
         margin-top: 8px;
+      }
+
+      .output-shell {
+        border-radius: var(--radius-card);
         border: 1px solid var(--border);
-        border-radius: var(--radius-sm);
-        background: var(--card-surface);
-        padding: 10px;
-        white-space: pre-wrap;
+        overflow: hidden;
+        background: var(--card-bg);
+        box-shadow: 0 4px 24px rgba(15, 23, 42, 0.06);
+      }
+
+      .output-hero {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 16px 18px;
+        background: linear-gradient(
+          125deg,
+          var(--theme-light) 0%,
+          rgba(255, 255, 255, 0.95) 42%,
+          rgba(240, 253, 244, 0.85) 100%
+        );
+        border-bottom: 1px solid var(--border);
+      }
+
+      .output-hero-mark {
+        flex-shrink: 0;
+        width: 46px;
+        height: 46px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(145deg, var(--green) 0%, #15803d 100%);
+        color: #fff;
+        box-shadow: 0 6px 16px rgba(22, 163, 74, 0.35);
+      }
+
+      .output-hero-mark svg {
+        width: 24px;
+        height: 24px;
+        stroke: currentColor;
+        stroke-width: 2.25;
+        fill: none;
+      }
+
+      .output-hero-text {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+      }
+
+      .output-hero-kicker {
         font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--green);
+        margin-bottom: 4px;
+      }
+
+      .output-hero-title {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--text-primary);
+        letter-spacing: -0.02em;
+        line-height: 1.25;
+      }
+
+      .output-hero-sub {
+        margin: 6px 0 0;
+        font-size: 12px;
+        line-height: 1.45;
         color: var(--text-secondary);
+        white-space: nowrap;
+      }
+
+      .output-body {
+        padding: 14px 16px 16px;
+        background: linear-gradient(180deg, #fafbfc 0%, #fff 28%);
+      }
+
+      .output-payload-label {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 8px;
+      }
+
+      .output-yaml-pre {
+        margin: 0;
+        padding: 14px 16px;
+        font-size: 11px;
+        line-height: 1.65;
+        color: var(--text-primary);
+        white-space: pre-wrap;
+        word-break: break-word;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        border-left: 3px solid var(--theme);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      }
+
+      .output-foot {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 0 16px 14px;
+        background: #fff;
+      }
+
+      .output-foot-pill {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 6px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: var(--card-surface);
+        font-size: 11px;
+      }
+
+      .output-foot-pill strong {
+        font-family: var(--font-mono);
+        font-weight: 600;
+        color: var(--theme);
+      }
+
+      .output-foot-pill span {
+        color: var(--text-muted);
+        font-size: 10px;
+      }
+
+      .output-so-block {
+        margin-top: 4px;
+      }
+
+      .output-so-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+      }
+
+      .output-so-head .output-so-title {
+        margin: 0;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .output-so-head .output-so-caption {
+        margin: 2px 0 0;
+        font-size: 11px;
+        color: var(--text-secondary);
+      }
+
+      .output-so-list .so-row {
+        border-color: var(--border-strong);
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+      }
+
+      .output-so-summary {
+        margin-top: 12px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px dashed var(--border-strong);
+        background: var(--green-light);
+        font-size: 11px;
+        line-height: 1.5;
+        color: var(--text-secondary);
+      }
+
+      .output-so-summary strong {
+        color: var(--green);
       }
 
       .so-list {
@@ -992,6 +1186,37 @@
         border-radius: var(--radius-sm);
         background: #fff;
         padding: 8px 10px;
+      }
+
+      .so-row-main {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .so-row-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        align-items: center;
+        justify-content: flex-end;
+      }
+
+      .so-disposition-note {
+        margin-top: 4px;
+        font-size: 9px;
+        line-height: 1.35;
+      }
+
+      .so-disposition-note.pending {
+        color: var(--text-muted);
+      }
+
+      .so-disposition-note.approved {
+        color: var(--green);
+      }
+
+      .so-disposition-note.held {
+        color: var(--amber);
       }
 
       .so-id {
@@ -1341,12 +1566,11 @@
         <div class="hero-content">
           <div class="live-badge mono">
             <span class="live-dot" aria-hidden="true"></span>
-            <span>LIVE SYSTEM · NAQUA AGENTOS v4.0</span>
+            <span>LIVE SYSTEM</span>
           </div>
           <h1>Sales Order Automation <span>using Agentic AI</span></h1>
           <p>
-            An autonomous 6-agent pipeline that converts inbound Purchase Orders into ERP-posted Sales
-            Orders — complete with export documentation — in under 4 minutes.
+            Order-to-cash in minutes, not days. Live SAP sales orders and export-ready documentation from a single automated run, with a clear trail your auditors can follow.
           </p>
           <div class="kpi-grid">
             <article class="kpi-card">
@@ -1586,7 +1810,7 @@
         {
           id: 6, key: "compliance", theme: "violet", icon: iconCompliance, dot: "var(--violet)", name: "Compliance",
           desc: "Generates export documentation, controls finance sign-off, and writes immutable audit logs.",
-          tools: ["DocGen Engine", "SWIFT Router", "Audit Logger", "DHL API"],
+          tools: ["Auto document builder", "Bank payment messaging", "Audit trail & controls", "Courier booking & tracking"],
           stateText: { done: "Completed", running: "Running", hitl: "Awaiting review", error: "Error", idle: "Idle" },
           steps: [
             ["3 confirmed sales orders received — total USD 300,672", "The approved order data from the previous step has been loaded. Document preparation is starting for all 3 shipments.", "0.2s · 3 SOs"],
@@ -1608,6 +1832,33 @@
             { type: "blue", label: "Analytics", body: "Cycle 3m51s · 18 docs · 94% bank · 60–80% cost reduction · 97.4% accuracy" },
           ],
           output: "compliance_bundle:\n- docs: 18\n- bank_submission: ready\n- dhl_dispatch: queued\n- audit_log: immutable_entry_written",
+        },
+      ];
+
+      const OUTPUT_AGENT_HERO = [
+        {
+          title: "Inbox signal locked in",
+          sub: "Coral PO classified, PDF saved, buyer acknowledgement sent — queued for extraction.",
+        },
+        {
+          title: "Document intelligence complete",
+          sub: "24 fields extracted at 99.4% confidence; zero manual re-key before product matching.",
+        },
+        {
+          title: "Product alignment achieved",
+          sub: "ERP codes on every line; exceptions cleared — ready for pricing, credit, and policy checks.",
+        },
+        {
+          title: "Validation passed — green light",
+          sub: "37 checks OK: complete data, pricing within tolerance, credit headroom — cleared to post SOs.",
+        },
+        {
+          title: "Sales orders live in SAP",
+          sub: "3 SOs manager-approved in one batch; totals aligned for export and finance.",
+        },
+        {
+          title: "Export pack sealed for dispatch",
+          sub: "Docs generated & finance-signed; immutable audit log — bank and buyer packages ready.",
         },
       ];
 
@@ -1757,6 +2008,136 @@
         },
       };
 
+      function getSoDocumentIds() {
+        return Object.keys(soDocuments);
+      }
+
+      function initSoDispositions() {
+        const next = {};
+        getSoDocumentIds().forEach((id) => {
+          next[id] = "pending";
+        });
+        appState.soDisposition = next;
+      }
+
+      initSoDispositions();
+
+      function parseSoAmountUsd(orderId) {
+        const doc = soDocuments[orderId];
+        if (!doc || !doc.amount) return 0;
+        const n = parseFloat(String(doc.amount).replace(/[^0-9.-]/g, ""));
+        return Number.isFinite(n) ? n : 0;
+      }
+
+      function soListsFromDisposition() {
+        const ids = getSoDocumentIds();
+        const approved = ids.filter((id) => appState.soDisposition[id] === "approved");
+        const held = ids.filter((id) => appState.soDisposition[id] === "held");
+        const pending = ids.filter((id) => appState.soDisposition[id] === "pending");
+        return { approved, held, pending };
+      }
+
+      function soAllDispositionsChosen() {
+        return soListsFromDisposition().pending.length === 0;
+      }
+
+      function setSoDisposition(orderId, disposition) {
+        if (!appState.soDisposition || !(orderId in appState.soDisposition)) return;
+        if (disposition !== "approved" && disposition !== "held" && disposition !== "pending") return;
+        appState.soDisposition[orderId] = disposition;
+        refreshSoApprovalPanelIfOpen();
+      }
+
+      function markAllSoDispositionForManager(disposition) {
+        getSoDocumentIds().forEach((id) => {
+          appState.soDisposition[id] = disposition;
+        });
+        refreshSoApprovalPanelIfOpen();
+      }
+
+      function syncSoAgentStoryAfterCheckpoint() {
+        const { approved, held } = soListsFromDisposition();
+        const na = approved.length;
+        const nh = held.length;
+        const total = na + nh;
+        const approvedSum = approved.reduce((s, id) => s + parseSoAmountUsd(id), 0);
+        const approvedMoney = new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0,
+        }).format(approvedSum);
+
+        if (nh === 0 && na === total) {
+          agents[4].steps[3][0] = "Waiting for manager to approve the sales orders";
+          agents[4].steps[3][1] =
+            "Manager reviewed and released all three orders within the 2-hour SLA. Commercial approval is on record.";
+          agents[4].steps[3][2] = "Manager approved · 3/3 SOs";
+          agents[4].steps[4][0] = "Orders approved and active in the system";
+          agents[4].steps[4][1] =
+            "Manager approved in 38 minutes (well within the 2-hour limit). All 3 sales orders are confirmed and live. Export documents can now be prepared.";
+          agents[4].steps[4][2] = "38 min · SLA met";
+          agents[4].logs[3] = "Manager review requested for SO-45912/13/14 — awaiting approval.";
+          agents[4].logs[4] = "Manager sign-off complete.";
+          agents[4].banners[0].body = "SO-45912, SO-45913, SO-45914 posted to SAP. Sales team notified.";
+          agents[4].output = "sales_orders:\n- SO-45912\n- SO-45913\n- SO-45914\namount_usd: 300672";
+          OUTPUT_AGENT_HERO[4].sub = "3 SOs manager-approved in one batch; totals aligned for export and finance.";
+          agents[5].steps[0][0] = "3 confirmed sales orders received — total USD 300,672";
+          agents[5].steps[0][1] =
+            "The approved order data from the previous step has been loaded. Document preparation is starting for all 3 shipments.";
+          agents[5].steps[0][2] = "0.2s · 3 SOs";
+          return;
+        }
+
+        const approvedCsv = approved.join(", ");
+        const heldCsv = held.join(", ");
+        agents[4].steps[3][0] = "Waiting for manager to approve the sales orders";
+        agents[4].steps[3][1] =
+          `Manager released ${na} of ${total} SOs (${approvedCsv}); ${nh} order${nh > 1 ? "s remain" : " remains"} on commercial hold in SAP — decision logged.`;
+        agents[4].steps[3][2] = `Partial release · ${na}/${total} SOs`;
+        agents[4].steps[4][0] = "Orders approved and active in the system";
+        agents[4].steps[4][1] =
+          `${na} sales order${na > 1 ? "s are" : " is"} live for export; ${nh} SO${nh > 1 ? "s" : ""} ${nh > 1 ? "remain" : "remains"} blocked pending further manager review.`;
+        agents[4].steps[4][2] = "Partial · on record";
+        agents[4].logs[3] = `Manager released ${approvedCsv}; hold retained for ${heldCsv} — mixed sign-off.`;
+        agents[4].logs[4] = "Partial manager sign-off — follow-up queue opened for held SOs.";
+        agents[4].banners[0].body = `${approvedCsv} released in SAP. Held: ${heldCsv} — sales notified.`;
+        const outLines = approved.map((id) => `- ${id} (released)`).concat(held.map((id) => `- ${id} (on hold)`));
+        agents[4].output = `sales_orders:\n${outLines.join("\n")}\nreleased_amount_usd: ${Math.round(approvedSum)}`;
+        OUTPUT_AGENT_HERO[4].sub = `${na} SO${na > 1 ? "s" : ""} released (${approvedMoney}); ${nh} on managerial hold.`;
+
+        agents[5].steps[0][0] = `${na} confirmed sales order${na > 1 ? "s" : ""} received — total ${approvedMoney}`;
+        agents[5].steps[0][1] = `Approved SO data loaded (${approvedCsv}). Held orders excluded until released; export prep follows released lines only.`;
+        agents[5].steps[0][2] = `0.2s · ${na} SOs`;
+      }
+
+      function submitSoManagerCheckpoint() {
+        const { approved, held, pending } = soListsFromDisposition();
+        if (pending.length) return;
+
+        if (approved.length === 0) {
+          appState.soHoldForReview = true;
+          appState.soHitlApproved = false;
+          appState.activeBottomPanel = null;
+          toggleBottomPanel(null);
+          renderPanel();
+          updateStatusBlock();
+          return;
+        }
+
+        syncSoAgentStoryAfterCheckpoint();
+        appState.soHitlApproved = true;
+        appState.soHoldForReview = false;
+        appState.activeBottomPanel = null;
+        toggleBottomPanel(null);
+        appState.resumeStepByAgent[4] = appState.completedSteps[4] || 4;
+        refreshAgentStates();
+        appState.agentStates[4] = "running";
+        renderNav();
+        renderPanel();
+        updateStatusBlock();
+      }
+
       const complianceExportDocuments = [
         { code: "BL-D-01", name: "Draft Bill of Lading — CGMU6956470", detail: "KICT load port · FOB Karachi · On-board notation pending" },
         { code: "BL-D-02", name: "Draft Bill of Lading — CGMU6983671", detail: "Same voyage · Partial shipment 1 of 3" },
@@ -1833,9 +2214,17 @@
         }
         if (agentIndex === 4 && appState.soHitlApproved) {
           if (logStepIndex === 3) {
-            return "Manager approved all 3 SOs (SO-45912/13/14) — commercial sign-off recorded.";
+            const { approved, held } = soListsFromDisposition();
+            if (held.length === 0) {
+              return "Manager approved all 3 SOs (SO-45912/13/14) — commercial sign-off recorded.";
+            }
+            return `Manager partial sign-off — released ${approved.join(", ")}; on hold: ${held.join(", ")}.`;
           }
-          if (logStepIndex === 4) return "Release posted — all orders active in SAP.";
+          if (logStepIndex === 4) {
+            const { held } = soListsFromDisposition();
+            if (held.length === 0) return "Release posted — all orders active in SAP.";
+            return "Release posted — approved SOs active; held SOs unchanged pending follow-up.";
+          }
         }
         if (agentIndex === 5 && appState.complianceHitlApproved) {
           if (logStepIndex === 3) return "Finance approved export bundle — sign-off recorded.";
@@ -1900,6 +2289,7 @@
           appState.soApprovalPreviewSeen = false;
           appState.soHoldForReview = false;
           appState.soManagerReviewedSoIds = new Set();
+          initSoDispositions();
           markStepComplete(agentIndex, 4);
           return;
         }
@@ -2188,11 +2578,13 @@
             ? "Wait for processing to finish"
             : idx === 2 && !appState.hitlApproved
               ? "Approve or correct the HITL item first"
-              : idx === 5 && !appState.complianceHitlApproved && appState.agentStates[5] === "hitl"
-                ? "Approve finance sign-off in Manual approval first"
-                : idx === 5
-                  ? "End of pipeline"
-                  : "Go to next agent"
+              : idx === 4 && !appState.soHitlApproved
+                ? "Set Approve or Hold per SO in Manual approval, then Apply decisions (at least one Approve) to continue"
+                : idx === 5 && !appState.complianceHitlApproved && appState.agentStates[5] === "hitl"
+                  ? "Approve finance sign-off in Manual approval first"
+                  : idx === 5
+                    ? "End of pipeline"
+                    : "Go to next agent"
           : "Go to next agent";
       }
 
@@ -2238,9 +2630,7 @@
         if (appState.activeBottomPanel === "approval") {
           content = `<div style="padding:16px;">${renderApprovalContent(idx)}</div>`;
         } else if (appState.activeBottomPanel === "output") {
-          content = idx === 4
-            ? `<div class="output-panel" style="margin:16px;">${renderSoOutputPanel()}</div>`
-            : `<div class="output-panel mono" style="margin:16px; font-size:11px;">${a.output}</div>`;
+          content = `<div class="output-panel" style="margin:16px;">${renderAgentOutputPanel(idx, a)}</div>`;
         } else if (appState.activeBottomPanel === "validate") {
           content = `<div class="inline-note" style="margin:16px;">Re-validation complete. No issues found.</div>`;
         }
@@ -2332,22 +2722,102 @@
         `;
       }
 
+      function escapeHtml(str) {
+        if (str == null) return "";
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
       function renderSoOutputPanel() {
-        const ids = Object.keys(soDocuments);
-        return `
-          <div class="mono" style="font-size:10px; color:var(--text-muted);">Generated Sales Orders</div>
-          <div class="so-list">
-            ${ids
-              .map((id) => `
+        const ids = getSoDocumentIds();
+        const { approved, held } = soListsFromDisposition();
+        const approvedSum = approved.reduce((s, id) => s + parseSoAmountUsd(id), 0);
+        const fmtApproved = new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0,
+        }).format(approvedSum);
+        const fullTotal = ids.reduce((s, id) => s + parseSoAmountUsd(id), 0);
+        const fmtFull = new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0,
+        }).format(fullTotal);
+        const rowHtml = ids
+          .map((id) => {
+            const st = appState.soDisposition[id];
+            let meta = "Posted · Commercially approved · Ready for export";
+            if (st === "held" && appState.soHitlApproved) {
+              meta = "Posted · On managerial hold · Export blocked for this SO";
+            } else if (st === "held" && !appState.soHitlApproved) {
+              meta = "Posted · Awaiting manager disposition";
+            }
+            return `
                 <div class="so-row">
-                  <div>
+                  <div class="so-row-main">
                     <div class="so-id">${id}</div>
-                    <div class="so-meta">Coral International · Posted · SAP S/4HANA</div>
+                    <div class="so-meta">${meta}</div>
                   </div>
-                  <button class="btn btn-blue" onclick="viewSalesOrder('${id}')">View</button>
-                </div>
-              `)
-              .join("")}
+                  <button type="button" class="btn btn-blue" onclick="viewSalesOrder('${id}')">Open detail</button>
+                </div>`;
+          })
+          .join("");
+        let summaryBody;
+        if (held.length === 0) {
+          summaryBody = `<strong>What you achieved:</strong> three sales orders totaling <strong>${fmtFull}</strong> with no manual SAP entry — each line ties back to validated items and pricing from earlier agents.`;
+        } else {
+          summaryBody = `<strong>Partial batch:</strong> <strong>${approved.length}</strong> SO${approved.length > 1 ? "s" : ""} released (<strong>${fmtApproved}</strong>); <strong>${held.length}</strong> on managerial hold (${held.join(", ")}). Export and downstream steps follow released orders only.`;
+        }
+        return `
+          <div class="output-so-head">
+            <div>
+              <p class="output-so-title">Posted sales orders</p>
+              <p class="output-so-caption">Batch COR-BATCH-46 · Coral International · SAP S/4HANA · LC ANB-2026-44821</p>
+            </div>
+          </div>
+          <div class="so-list output-so-list">
+            ${rowHtml}
+          </div>
+          <div class="output-so-summary">
+            ${summaryBody}
+          </div>
+        `;
+      }
+
+      function renderAgentOutputPanel(idx, a) {
+        const hero = OUTPUT_AGENT_HERO[idx] || {
+          title: "Agent handoff complete",
+          sub: "Structured output is ready for audit and the next pipeline stage.",
+        };
+        const pills = (a.metrics || [])
+          .map(
+            (m) =>
+              `<span class="output-foot-pill"><strong>${escapeHtml(m[0])}</strong><span>${escapeHtml(m[1])}</span></span>`
+          )
+          .join("");
+        const checkSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/><path d="M8 12.5l2.5 2.5L16 9" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+        const rootLine = ((a.output || "").split("\n")[0] || "").replace(/:\s*$/, "") || `${a.key} payload`;
+        const inner =
+          idx === 4
+            ? `<div class="output-so-block">${renderSoOutputPanel()}</div>`
+            : `<div class="output-payload-label mono">Structured payload · ${escapeHtml(rootLine)}</div><pre class="output-yaml-pre mono">${escapeHtml(a.output)}</pre>`;
+        return `
+          <div class="output-shell theme-${a.theme}">
+            <div class="output-hero">
+              <div class="output-hero-mark">${checkSvg}</div>
+              <div class="output-hero-text">
+                <div class="output-hero-kicker">Success · handoff ready</div>
+                <h3 class="output-hero-title">${escapeHtml(hero.title)}</h3>
+                <p class="output-hero-sub">${escapeHtml(hero.sub)}</p>
+              </div>
+            </div>
+            <div class="output-body">${inner}</div>
+            <div class="output-foot">${pills}</div>
           </div>
         `;
       }
@@ -2362,13 +2832,14 @@
       }
 
       function openSoManagerAllSoPreview() {
-        const ids = Object.keys(soDocuments);
+        const ids = getSoDocumentIds();
+        const n = ids.length;
         if (!ids.length || !soModalOverlay || !soModalBody) return;
         appState.soApprovalPreviewSeen = true;
         const titleEl = document.querySelector(".so-modal-title");
-        if (titleEl) titleEl.textContent = "Review all 3 sales orders";
+        if (titleEl) titleEl.textContent = `Review all ${n} sales orders`;
         soModalBody.innerHTML = `
-          <p style="margin:0 0 12px;font-size:12px;color:var(--text-secondary);">Review the full details below. Close when finished, then use <strong>Approve all 3 SOs</strong> in the panel.</p>
+          <p style="margin:0 0 12px;font-size:12px;color:var(--text-secondary);">Review the full details below. Close when finished, then mark each SO in the panel and use <strong>Apply decisions & continue</strong> (or <strong>Approve all</strong>).</p>
           ${ids
             .map(
               (id, i) => `
@@ -2384,7 +2855,7 @@
 
       function viewSalesOrderFromManager(orderId) {
         appState.soManagerReviewedSoIds.add(orderId);
-        if (appState.soManagerReviewedSoIds.size >= 3) {
+        if (appState.soManagerReviewedSoIds.size >= getSoDocumentIds().length) {
           appState.soApprovalPreviewSeen = true;
         }
         viewSalesOrder(orderId);
@@ -2453,10 +2924,8 @@
       }
 
       function soHoldForReviewManager() {
-        appState.soHoldForReview = true;
-        toggleBottomPanel(null);
-        renderPanel();
-        updateStatusBlock();
+        markAllSoDispositionForManager("held");
+        submitSoManagerCheckpoint();
       }
 
       function approveComplianceHitl() {
@@ -2500,16 +2969,8 @@
       }
 
       function approveSoManagerHitl() {
-        appState.soHitlApproved = true;
-        appState.soHoldForReview = false;
-        appState.activeBottomPanel = null;
-        toggleBottomPanel(null);
-        appState.resumeStepByAgent[4] = appState.completedSteps[4] || 4;
-        refreshAgentStates();
-        appState.agentStates[4] = "running";
-        renderNav();
-        renderPanel();
-        updateStatusBlock();
+        markAllSoDispositionForManager("approved");
+        submitSoManagerCheckpoint();
       }
 
       function rejectHitl(idx) {
@@ -2571,37 +3032,74 @@
       }
 
       function renderApprovalContent(idx) {
+        if (idx === 4 && appState.soHitlApproved) {
+          const { approved, held } = soListsFromDisposition();
+          const released = approved.join(", ") || "—";
+          const onHold = held.length ? held.join(", ") : "—";
+          return `
+            <div class="banner green" style="margin:0;">
+              <div class="b-ico">N</div>
+              <div>
+                <div class="b-label mono">Checkpoint complete</div>
+                <div class="b-body">Released: <strong>${released}</strong>. On hold: <strong>${onHold}</strong>. Use <strong>Next → Compliance</strong> to continue the pipeline.</div>
+              </div>
+            </div>
+            <div class="modal-actions" style="margin-top:14px;">
+              <button type="button" class="btn btn-ghost" onclick="toggleBottomPanel(null)">Close</button>
+            </div>`;
+        }
         if (idx === 4) {
-          const ids = Object.keys(soDocuments);
+          const ids = getSoDocumentIds();
+          const n = ids.length;
+          const pending = soListsFromDisposition().pending.length;
+          const applyDisabled = pending ? " disabled" : "";
+          const rows = ids
+            .map((id) => {
+              const d = appState.soDisposition[id] || "pending";
+              let note = "No decision yet — choose Approve or Hold.";
+              let noteClass = "pending";
+              if (d === "approved") {
+                note = "Will release with this batch when you apply.";
+                noteClass = "approved";
+              } else if (d === "held") {
+                note = "Stays on managerial hold in SAP after you apply.";
+                noteClass = "held";
+              }
+              const approveClass = d === "approved" ? "btn btn-blue" : "btn btn-ghost";
+              const holdClass = d === "held" ? "btn btn-amber" : "btn btn-ghost";
+              return `
+                <div class="so-row">
+                  <div class="so-row-main">
+                    <div class="so-id">${id}</div>
+                    <div class="so-meta">Coral International · Pending manager approval</div>
+                    <div class="so-disposition-note ${noteClass}">${note}</div>
+                  </div>
+                  <div class="so-row-actions">
+                    <button type="button" class="btn btn-blue" style="padding:4px 10px;font-size:11px;" onclick="viewSalesOrderFromManager('${id}')">View</button>
+                    <button type="button" class="${approveClass}" style="padding:4px 10px;font-size:11px;" onclick="setSoDisposition('${id}','approved')">Approve</button>
+                    <button type="button" class="${holdClass}" style="padding:4px 10px;font-size:11px;" onclick="setSoDisposition('${id}','held')">Hold</button>
+                  </div>
+                </div>`;
+            })
+            .join("");
           return `
             <div class="anom-row"><div class="anom-dot" style="background:var(--amber)"></div><div>
-              <div class="anom-item">Sales Order approval pending — 3 SOs awaiting manager sign-off</div>
+              <div class="anom-item">Sales Order approval pending — ${n} SOs awaiting manager sign-off</div>
               <div class="anom-detail">SO-45912, SO-45913, SO-45914 · Total USD 300,672 · Coral International</div>
             </div></div>
             <div class="modal-sub" style="margin-top:12px;font-size:11px;color:var(--text-secondary);line-height:1.5;">
-              Optional: open order details with <strong>View all 3 in one window</strong> or each <strong>View</strong> below. You can approve at any time.
+              For each SO choose <strong>Approve</strong> or <strong>Hold</strong>, then <strong>Apply decisions & continue</strong> (at least one Approve releases the pipeline). Shortcuts: <strong>Approve all</strong> or <strong>Hold all</strong>. Optional: <strong>View all in one window</strong> or open each order.
             </div>
             <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
-              <button type="button" class="btn btn-blue" onclick="openSoManagerAllSoPreview()">View all 3 in one window</button>
+              <button type="button" class="btn btn-blue" onclick="openSoManagerAllSoPreview()">View all ${n} in one window</button>
             </div>
             <div class="so-list" style="margin-top:12px;">
-              ${ids
-                .map(
-                  (id) => `
-                <div class="so-row">
-                  <div>
-                    <div class="so-id">${id}</div>
-                    <div class="so-meta">Coral International · Pending manager approval</div>
-                  </div>
-                  <button type="button" class="btn btn-blue" onclick="viewSalesOrderFromManager('${id}')">View</button>
-                </div>
-              `
-                )
-                .join("")}
+              ${rows}
             </div>
-            <div class="modal-actions" style="margin-top:16px;flex-wrap:wrap;">
-              <button type="button" class="btn btn-blue" onclick="approveSoManagerHitl()" title="Approve and continue pipeline">Approve all 3 SOs</button>
-              <button type="button" class="btn btn-ghost" onclick="soHoldForReviewManager()" title="Close without approving; SOs stay in SAP pending your decision">Hold for review</button>
+            <div class="modal-actions" style="margin-top:16px;flex-wrap:wrap;gap:8px;">
+              <button type="button" class="btn btn-blue" onclick="submitSoManagerCheckpoint()"${applyDisabled} title="Requires every SO marked Approve or Hold; at least one Approve to continue">Apply decisions & continue</button>
+              <button type="button" class="btn btn-blue" onclick="approveSoManagerHitl()" style="opacity:0.95" title="Mark all Approve and continue immediately">Approve all ${n} SOs</button>
+              <button type="button" class="btn btn-ghost" onclick="soHoldForReviewManager()" title="Mark all Hold and close — pipeline waits until you approve at least one SO">Hold all for review</button>
             </div>
           `;
         }
@@ -2933,12 +3431,16 @@
           )
           .join("");
 
+        const soHeldListPartial =
+          idx === 4 && appState.soHitlApproved ? soListsFromDisposition().held : [];
+        const showSoPartialReleaseNote = soHeldListPartial.length > 0;
+
         panelHost.innerHTML = `
           <div class="agent-panel theme-${a.theme}">
             <div class="agent-header card">
               <div class="header-main">
                 <div class="agent-icon">${a.icon}</div>
-                <div>
+                <div class="header-main-body">
                   <div class="header-title">${a.name} ${state === "hitl" ? '<span class="state-badge hitl mono">HITL</span>' : ""}</div>
                   <div class="header-sub">${a.desc}</div>
                   <div class="tool-list">
@@ -2989,7 +3491,15 @@
                   idx === 4 && appState.soHoldForReview && !appState.soHitlApproved
                     ? `
                 <div style="margin-top:10px;padding:9px 10px;border:1px solid var(--amber-border);border-radius:var(--radius-sm);background:var(--amber-light);color:var(--amber);font-size:11px;line-height:1.45;">
-                  <strong>Hold for review:</strong> Manager sign-off was deferred. The three SOs remain posted in SAP awaiting approval. Open <strong>Manual approval</strong> when ready to review, then approve or hold again.
+                  <strong>Hold for review:</strong> Manager sign-off was deferred. All ${getSoDocumentIds().length} SOs remain posted in SAP awaiting approval. Open <strong>Manual approval</strong> when ready to review, set Approve/Hold per SO, then apply.
+                </div>`
+                    : ""
+                }
+                ${
+                  showSoPartialReleaseNote
+                    ? `
+                <div style="margin-top:10px;padding:9px 10px;border:1px solid var(--blue-border);border-radius:var(--radius-sm);background:var(--blue-light);color:var(--blue);font-size:11px;line-height:1.45;">
+                  <strong>Partial release:</strong> ${soHeldListPartial.join(", ")} ${soHeldListPartial.length > 1 ? "remain" : "remains"} on managerial hold. Released SOs continue downstream; held lines stay blocked in SAP until cleared.
                 </div>`
                     : ""
                 }
@@ -3033,6 +3543,8 @@
       window.openSoManagerAllSoPreview = openSoManagerAllSoPreview;
       window.viewSalesOrderFromManager = viewSalesOrderFromManager;
       window.soHoldForReviewManager = soHoldForReviewManager;
+      window.setSoDisposition = setSoDisposition;
+      window.submitSoManagerCheckpoint = submitSoManagerCheckpoint;
       window.approveComplianceHitl = approveComplianceHitl;
       window.complianceHoldForReview = complianceHoldForReview;
       window.openComplianceBundlePreview = openComplianceBundlePreview;
