@@ -204,10 +204,86 @@
         padding: 18px 24px;
       }
 
+      .features-head {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
       .feature-list {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
+        justify-content: center;
+      }
+
+      .demo-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid var(--blue-border);
+        background: linear-gradient(135deg, var(--blue-light) 0%, #ffffff 75%);
+        border-radius: 12px;
+        padding: 8px 10px;
+        box-shadow: 0 8px 22px rgba(37, 99, 235, 0.14);
+      }
+
+      .demo-cta-note {
+        font-size: 10px;
+        color: var(--blue);
+        font-weight: 600;
+      }
+
+      .btn-start-demo {
+        position: relative;
+        color: #fff;
+        border-color: #be123c;
+        background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+        box-shadow: 0 10px 24px rgba(225, 29, 72, 0.32);
+        font-weight: 700;
+        letter-spacing: 0.01em;
+      }
+
+      .btn-start-demo::before {
+        content: "";
+        position: absolute;
+        inset: -6px;
+        border-radius: 12px;
+        border: 2px solid rgba(225, 29, 72, 0.3);
+        animation: start-cta-pulse 1.9s ease-out infinite;
+        pointer-events: none;
+      }
+
+      .btn-start-demo:hover {
+        opacity: 1;
+        transform: translateY(-1px);
+      }
+
+      .btn-start-demo:disabled {
+        opacity: 1;
+        color: #ffffff;
+        border-color: #166534;
+        background: linear-gradient(135deg, #22c55e 0%, #16a34a 55%, #15803d 100%);
+        box-shadow: 0 12px 26px rgba(21, 128, 61, 0.35);
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.18);
+      }
+
+      .btn-start-demo:disabled::before {
+        display: none;
+      }
+
+      @keyframes start-cta-pulse {
+        0% {
+          transform: scale(0.94);
+          opacity: 0.8;
+        }
+        100% {
+          transform: scale(1.08);
+          opacity: 0;
+        }
       }
 
       .chip {
@@ -2020,15 +2096,21 @@
       </section>
 
       <section class="features-strip" id="features" aria-label="Features strip">
-        <div class="feature-list">
-          <div class="chip blue"><span class="chip-dot"></span>24/7 Inbox monitoring</div>
-          <div class="chip purple"><span class="chip-dot"></span>OCR + NLP extraction</div>
-          <div class="chip amber"><span class="chip-dot"></span>Human-in-the-loop (HITL)</div>
-          <div class="chip green"><span class="chip-dot"></span>ERP auto-posting</div>
-          <div class="chip teal"><span class="chip-dot"></span>Export doc generation</div>
-          <div class="chip blue"><span class="chip-dot"></span>Immutable audit log</div>
-          <div class="chip purple"><span class="chip-dot"></span>Real-time alerts</div>
-          <div class="chip green"><span class="chip-dot"></span>ISO-ready compliance</div>
+        <div class="features-head">
+          <div class="feature-list">
+            <div class="chip blue"><span class="chip-dot"></span>24/7 Inbox monitoring</div>
+            <div class="chip purple"><span class="chip-dot"></span>OCR + NLP extraction</div>
+            <div class="chip amber"><span class="chip-dot"></span>Human-in-the-loop (HITL)</div>
+            <div class="chip green"><span class="chip-dot"></span>ERP auto-posting</div>
+            <div class="chip teal"><span class="chip-dot"></span>Export doc generation</div>
+            <div class="chip blue"><span class="chip-dot"></span>Immutable audit log</div>
+            <div class="chip purple"><span class="chip-dot"></span>Real-time alerts</div>
+            <div class="chip green"><span class="chip-dot"></span>ISO-ready compliance</div>
+          </div>
+          <div class="demo-cta">
+            <button type="button" class="btn btn-start-demo" id="startDemoBtn" onclick="startLiveDemo()">Start Live Demo</button>
+            <span class="demo-cta-note mono">Pipeline starts from Email Watcher</span>
+          </div>
         </div>
       </section>
 
@@ -2039,9 +2121,9 @@
             <div class="agent-nav" id="agentNav"></div>
             <div class="status-block">
               <div class="status-row"><span>Orders</span><span id="statusOrders">3 live</span></div>
-              <div class="status-row"><span>Active agent</span><span id="statusAgent">03 · Item Mapper</span></div>
+              <div class="status-row"><span>Active agent</span><span id="statusAgent">01 · Email Watcher</span></div>
               <div class="status-row"><span>Elapsed timer</span><span id="statusTimer">00:00</span></div>
-              <div class="status-row"><span>Pipeline state</span><span id="statusPipeline">Awaiting approval</span></div>
+              <div class="status-row"><span>Pipeline state</span><span id="statusPipeline">Idle</span></div>
             </div>
           </aside>
           <section class="right-panel">
@@ -2098,7 +2180,7 @@
     <script>
       const appState = {
         currentAgent: 0,
-        agentStates: ["done", "done", "hitl", "running", "done", "running"],
+        agentStates: ["idle", "idle", "idle", "idle", "idle", "idle"],
         agentProgress: [],
         completedSteps: [],
         elapsedTime: 0,
@@ -2108,9 +2190,10 @@
         resumeStepByAgent: {},
         stepsAnimating: false,
         mapperManualCode: null,
+        demoStarted: false,
       };
 
-      appState.currentAgent = 2;
+      appState.currentAgent = 0;
       appState.startedAt = null;
       appState.timerRef = null;
       appState.hitlApproved = false;
@@ -2309,6 +2392,9 @@
           sub: "Docs generated & finance-signed; immutable audit log — bank and buyer packages ready.",
         },
       ];
+
+      const DEFAULT_MAPPER_OUTPUT =
+        "item_mapping:\n- auto_mapped: 11\n- flagged: 1\n- flagged_item: COR-FILTER-XLR8 (88%)\n- suggested_code: NAQUA-FILTER-XLR-8B";
 
       const agentNav = document.getElementById("agentNav");
       const panelHost = document.getElementById("panelHost");
@@ -2855,8 +2941,20 @@
         }, 1000);
       }
 
+      function startLiveDemo() {
+        if (appState.demoStarted) return;
+        appState.demoStarted = true;
+        const startBtn = document.getElementById("startDemoBtn");
+        if (startBtn) {
+          startBtn.disabled = true;
+          startBtn.textContent = "Live Demo Running";
+        }
+        beginAgentSimulation(0);
+      }
+
       function selectAgent(idx) {
         if (idx < 0 || idx >= agents.length) return;
+        if (!appState.demoStarted) return;
         beginAgentSimulation(idx);
       }
 
@@ -2999,6 +3097,7 @@
       }
 
       function isNextEnabled(agentIdx) {
+        if (!appState.demoStarted) return false;
         if (appState.stepsAnimating) return false;
         return !nextDisabled(agentIdx);
       }
@@ -3014,6 +3113,14 @@
         output.disabled = !isViewOutputEnabled(idx);
         validateBtn.disabled = !isValidateEnabled(idx);
         nextBtn.disabled = !isNextEnabled(idx);
+        if (!appState.demoStarted) {
+          const startTip = "Press Start Live Demo to begin pipeline";
+          manual.title = startTip;
+          output.title = startTip;
+          validateBtn.title = startTip;
+          nextBtn.title = startTip;
+          return;
+        }
         manual.title = manual.disabled
           ? "Available after processing reaches a checkpoint or completes"
           : "Opens anomaly review";
@@ -3581,6 +3688,7 @@
         appState.hitlApproved = true;
         appState.hitlRejected = false;
         appState.mapperManualCode = null;
+        agents[2].output = DEFAULT_MAPPER_OUTPUT;
         appState.activeBottomPanel = null;
         appState.resumeStepByAgent[2] = appState.completedSteps[2] || 3;
         refreshAgentStates();
@@ -3617,6 +3725,8 @@
           return;
         }
         appState.mapperManualCode = code;
+        agents[2].output =
+          `item_mapping:\n- auto_mapped: 11\n- flagged: 1\n- flagged_item: COR-FILTER-XLR8 (88%)\n- suggested_code: NAQUA-FILTER-XLR-8B\n- corrected_code: ${code}\n- final_code: ${code}\n- resolution: operator_override_saved`;
         appState.hitlRejected = false;
         appState.hitlApproved = true;
         appState.activeBottomPanel = null;
@@ -4161,7 +4271,27 @@
             <div class="bottom-panel-content card"></div>
           </div>
         `;
-        
+
+        if (!appState.demoStarted) {
+          const stepsContainer = document.getElementById("stepsContainer");
+          const logsContainer = document.getElementById("logsContainer");
+          if (stepsContainer) {
+            stepsContainer.innerHTML = `
+              <div class="inline-note" style="margin-top:0;">
+                Press <strong>Start Live Demo</strong> to begin from <strong>Email Watcher</strong>.
+              </div>
+            `;
+          }
+          if (logsContainer) {
+            logsContainer.innerHTML = `
+              <div class="log-head"><span class="tl-dot tl-red"></span><span class="tl-dot tl-amber"></span><span class="tl-dot tl-green"></span><span>agent_orchestrator --live --v4.0</span></div>
+              <div class="ll"><span class="ll-time mono">[00:00]</span><span class="ll-agent mono">SYSTEM</span><span class="ll-msg">Waiting for operator to start live demo.</span></div>
+            `;
+          }
+          updateActionBarButtons();
+          return;
+        }
+
         startAgentSimulation(idx);
         updateActionBarButtons();
       }
@@ -4180,6 +4310,7 @@
       window.closeComplianceModal = closeComplianceModal;
       window.closePipelineSummaryModal = closePipelineSummaryModal;
       window.openPipelineSummaryModal = openPipelineSummaryModal;
+      window.startLiveDemo = startLiveDemo;
 
       document.addEventListener("keydown", (e) => {
         const o = document.getElementById("pipelineSummaryOverlay");
@@ -4187,7 +4318,8 @@
       });
 
       renderNav();
-      beginAgentSimulation(0);
+      renderPanel();
+      updateStatusBlock();
     </script>
   </body>
 </html>
